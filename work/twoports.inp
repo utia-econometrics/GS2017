@@ -1,0 +1,48 @@
+open preprocess.xlsx --sheet=7 --quiet
+setobs 4 1991:1 --time-series
+diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
+
+#macro static analysis
+macro_corr <- corr d_GDP d_PI d_U d_IP d_HPIr d_HPIc FEDR d_Yr d_Ir d_Yc d_Ic
+ols d_GDP const d_PI d_U d_IP d_HPIr  FEDR
+ols d_PI const d_GDP  d_U d_IP d_HPIr  FEDR
+ols d_U const d_GDP d_PI d_IP d_HPIr  FEDR
+ols d_IP const d_GDP d_PI d_U d_HPIr FEDR
+ols d_HPIr const d_GDP d_PI d_U d_IP   FEDR
+ols FEDR const d_GDP d_PI d_U d_IP d_HPIr  
+
+#macro dynamic analysis
+
+adf 12 GDP --c --ct --test-down=AIC 
+adf 12 PI --c --ct --test-down=AIC 
+adf 12 U --c --ct --test-down=AIC 
+adf 12 IP --c --ct --test-down=AIC 
+adf 12 HPIr --c --ct --test-down=AIC 
+adf 12 HPIc --c --ct --test-down=AIC 
+adf 12 FEDR --c --ct --test-down=AIC
+
+macro_EG_lag4 <- coint 4 PI U IP HPIr --ct  
+var 2 d_GDP d_PI d_U d_IP d_HPIr FEDR --lagselect
+macro_joh_lag1 <- coint2 1 PI U IP HPIr --ct
+macro_joh_lag2 <- coint2 2  PI U IP HPIr  --ct
+
+macro_vecm_lag1_rank2 <- vecm 1 2 PI IP U HPIr  -crt
+macro_vecm_lag2_rank1 <- vecm 2 1 PI IP U HPIr  -crt
+macro_vecm_lag2_r1_ex <- vecm 2 1 PI IP U HPIr ; d_GDP(-1) d_GDP(-2) FEDR(-1) FEDR(-2) --ct
+
+#residential factors
+adf 12 Yr --c --ct --test-down=AIC 
+adf 12 Ir --c --ct --test-down=AIC 
+r_EG_lag3 <- coint 3 Yr Ir --ct  
+r_joh_lag2 <- coint2 2  Yr Ir PI U IP HPIr  --ct
+r_joh_lag1 <- coint2 2  Yr Ir PI U IP HPIr  --ct
+r_EG_Y <- coint 2 Yr PI U IP HPIr --ct  
+r_EG_I <- coint 2 Ir PI U IP HPIr --ct  
+var 2 d_Yr d_Ir d_PI d_U d_IP d_HPIr d_GDP FEDR --lagselect 
+r_vecm_lag2 <- vecm 2 2 Yr Ir; ; PI U IP HPIr  --crt
+r_vecm_lag2_ex <- vecm 2 2 Yr Ir; d_GDP(-1) FEDR(-1); PI U IP HPIr  --crt
+r_vecm_lag1 <- vecm 1 2 Yr Ir; ; PI U IP HPIr  --crt
+r_vecm_lag1_ex <- vecm 1 2 Yr Ir; d_Yr(-1) d_U(-1) FEDR(-1) d_HPIr(-1); PI U IP HPIr  --crt
+
+
+
