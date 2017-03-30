@@ -44,5 +44,13 @@ r_vecm_lag2_ex <- vecm 2 2 Yr Ir; d_GDP(-1) FEDR(-1); PI U IP HPIr  --crt
 r_vecm_lag1 <- vecm 1 2 Yr Ir; ; PI U IP HPIr  --crt
 r_vecm_lag1_ex <- vecm 1 2 Yr Ir; d_Yr(-1) d_U(-1) FEDR(-1) d_HPIr(-1); PI U IP HPIr  --crt
 
-
-
+restrict
+b[1,1] = 0
+b[1,2] = 0
+b[1,4] = 1
+b[2,1] = 1
+b[2,4] = 0
+b[2,5] = 0
+b[2,6] = 0
+b[2,7] = 0
+end restrict
