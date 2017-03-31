@@ -54,3 +54,9 @@ b[2,5] = 0
 b[2,6] = 0
 b[2,7] = 0
 end restrict
+
+#individual cointegration rels
+
+eg_c <- coint 2 Ic Yc IP U GDP --test-down --ct
+eg_r <- coint 2 Ir Yr IP PI HPIr GDP --test-down --ct
+
