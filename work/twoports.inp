@@ -2,6 +2,9 @@ open preprocess.xlsx --sheet=7 --quiet
 setobs 4 1991:1 --time-series
 diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
 
+
+
+
 #macro static analysis
 macro_corr <- corr d_GDP d_PI d_U d_IP d_HPIr d_HPIc FEDR d_Yr d_Ir d_Yc d_Ic
 ols d_GDP const d_PI d_U d_IP d_HPIr  FEDR
@@ -21,28 +24,26 @@ adf 12 HPIr --c --ct --test-down=AIC
 adf 12 HPIc --c --ct --test-down=AIC 
 adf 12 FEDR --c --ct --test-down=AIC
 
-macro_EG_lag4 <- coint 4 PI U IP HPIr --ct  
-var 2 d_GDP d_PI d_U d_IP d_HPIr FEDR --lagselect
-macro_joh_lag1 <- coint2 1 PI U IP HPIr --ct
-macro_joh_lag2 <- coint2 2  PI U IP HPIr  --ct
+macro_EG_lag4 <- coint 4 PI U IP HPIr GDP --test-down --ct  
 
-macro_vecm_lag1_rank2 <- vecm 1 2 PI IP U HPIr  -crt
-macro_vecm_lag2_rank1 <- vecm 2 1 PI IP U HPIr  -crt
-macro_vecm_lag2_r1_ex <- vecm 2 1 PI IP U HPIr ; d_GDP(-1) d_GDP(-2) FEDR(-1) FEDR(-2) --ct
+var 2 d_GDP d_PI d_U d_IP d_HPIr FEDR --lagselect
+macro_joh_lag2 <- coint2 2  PI U IP HPIr GDP --ct
+
+macro_vecm_lag2_rank1 <- vecm 2 1 PI IP U GDP HPIr  -crt
+macro_vecm_lag2_r1_ex <- vecm 2 1 PI IP U HPIr GDP ; FEDR(-1) FEDR(-2) --ct
 
 #residential factors
 adf 12 Yr --c --ct --test-down=AIC 
 adf 12 Ir --c --ct --test-down=AIC 
-r_EG_lag3 <- coint 3 Yr Ir --ct  
-r_joh_lag2 <- coint2 2  Yr Ir PI U IP HPIr  --ct
-r_joh_lag1 <- coint2 2  Yr Ir PI U IP HPIr  --ct
-r_EG_Y <- coint 2 Yr PI U IP HPIr --ct  
-r_EG_I <- coint 2 Ir PI U IP HPIr --ct  
+r_EG_YIAlone <- coint 2 Yr Ir --test-down --ct  
+r_EG_Y <- coint 2 Yr PI U IP GDP HPIr --test-down --ct  
+r_EG_I <- coint 2 Ir PI U IP GDP HPIr --test-down --ct 
+r_EG_IY <- coint 2 Ir Yr GDP PI U IP HPIr --test-down --ct
+r_joh <- coint2 2  Yr Ir PI U IP HPIr GDP --ct
+
+#vecm
 var 2 d_Yr d_Ir d_PI d_U d_IP d_HPIr d_GDP FEDR --lagselect 
-r_vecm_lag2 <- vecm 2 2 Yr Ir; ; PI U IP HPIr  --crt
-r_vecm_lag2_ex <- vecm 2 2 Yr Ir; d_GDP(-1) FEDR(-1); PI U IP HPIr  --crt
-r_vecm_lag1 <- vecm 1 2 Yr Ir; ; PI U IP HPIr  --crt
-r_vecm_lag1_ex <- vecm 1 2 Yr Ir; d_Yr(-1) d_U(-1) FEDR(-1) d_HPIr(-1); PI U IP HPIr  --crt
+r_vecm <- vecm 1 2 Yr Ir; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP HPIr  --crt
 
 restrict
 b[1,1] = 0
@@ -55,8 +56,7 @@ b[2,6] = 0
 b[2,7] = 0
 end restrict
 
-#individual cointegration rels
+#c factors
 
 eg_c <- coint 2 Ic Yc IP U GDP --test-down --ct
-eg_r <- coint 2 Ir Yr IP PI HPIr GDP --test-down --ct
 
