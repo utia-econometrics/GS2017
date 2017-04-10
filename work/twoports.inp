@@ -2,9 +2,6 @@ open preprocess.xlsx --sheet=7 --quiet
 setobs 4 1991:1 --time-series
 diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
 
-
-
-
 #macro static analysis
 macro_corr <- corr d_GDP d_PI d_U d_IP d_HPIr d_HPIc FEDR d_Yr d_Ir d_Yc d_Ic
 ols d_GDP const d_PI d_U d_IP d_HPIr  FEDR
@@ -36,14 +33,18 @@ macro_vecm_lag2_r1_ex <- vecm 2 1 PI IP U HPIr GDP ; FEDR(-1) FEDR(-2) --ct
 adf 12 Yr --c --ct --test-down=AIC 
 adf 12 Ir --c --ct --test-down=AIC 
 r_EG_YIAlone <- coint 2 Yr Ir --test-down --ct  
-r_EG_Y <- coint 2 Yr PI U IP GDP HPIr --test-down --ct  
-r_EG_I <- coint 2 Ir PI U IP GDP HPIr --test-down --ct 
+
+r_EG_I <- coint 2 Ir PI IP GDP HPIr --test-down --ct 
+r_EG_Y <- coint 2 Ir Yr PI IP GDP HPIr --test-down --ct  
+
 r_EG_IY <- coint 2 Ir Yr GDP PI U IP HPIr --test-down --ct
 r_joh <- coint2 2  Yr Ir PI U IP HPIr GDP --ct
 
 #vecm
 var 2 d_Yr d_Ir d_PI d_U d_IP d_HPIr d_GDP FEDR --lagselect 
 r_vecm <- vecm 1 2 Yr Ir; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP HPIr  --crt
+
+vecm 1 2 Yr Ir HPIr; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP  --crt
 
 restrict
 b[1,1] = 0
@@ -58,5 +59,19 @@ end restrict
 
 #c factors
 
-eg_c <- coint 2 Ic Yc IP U GDP --test-down --ct
+coint 2 Ic IP U GDP PI HPIr --test-down --ct
+
+#? nevyhodit U PI
+
+coint 2 Ic Yc GDP --test-down --ct
+
+
+
+coint 2 Yr Ir Yc GDP U IP --test-down --ct
+
+# coint 2 Ir PI IP GDP HPIr --test-down --ct 
+#pryč coint 2 Yr Ir PI IP GDP HPIr FEDR U --test-down --ct  
+# coint 2 Yc Ic GDP --test-down --ct
+# coint 2 Ic IP GDP HPIr --test-down --ct
+
 
