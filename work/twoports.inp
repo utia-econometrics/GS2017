@@ -11,6 +11,17 @@ ols d_IP const d_GDP d_PI d_U d_HPIr FEDR
 ols d_HPIr const d_GDP d_PI d_U d_IP   FEDR
 ols FEDR const d_GDP d_PI d_U d_IP d_HPIr  
 
+#detrending
+ols GDP const time
+detrGDP=GDP-$coeff[2]*time
+
+ols PI const time
+detrPI=PI-$coeff[2]*time
+
+#graphs of macro vars
+
+macro_plot <- scatters detrGDP IP U HPIr  detrPI FEDR --with-lines
+
 #macro dynamic analysis
 
 adf 12 GDP --c --ct --test-down=AIC 
@@ -21,57 +32,89 @@ adf 12 HPIr --c --ct --test-down=AIC
 adf 12 HPIc --c --ct --test-down=AIC 
 adf 12 FEDR --c --ct --test-down=AIC
 
-macro_EG_lag4 <- coint 4 PI U IP HPIr GDP --test-down --ct  
+macro_EG <- coint 4 IP PI U HPIr GDP  --ct --test-down 
+ols IP const time PI U HPIr GDP 
+macro_EG_u=$uhat
 
 var 2 d_GDP d_PI d_U d_IP d_HPIr FEDR --lagselect
-macro_joh_lag2 <- coint2 2  PI U IP HPIr GDP --ct
+macro_joh<- coint2 2  PI U IP HPIr GDP --ct
 
-macro_vecm_lag2_rank1 <- vecm 2 1 PI IP U GDP HPIr  -crt
-macro_vecm_lag2_r1_ex <- vecm 2 1 PI IP U HPIr GDP ; FEDR(-1) FEDR(-2) --ct
+#factors
 
-#residential factors
 adf 12 Yr --c --ct --test-down=AIC 
 adf 12 Ir --c --ct --test-down=AIC 
-r_EG_YIAlone <- coint 2 Yr Ir --test-down --ct  
+adf 12 Yc --c --ct --test-down=AIC 
+adf 12 Ic --c --ct --test-down=AIC 
 
-r_EG_I <- coint 2 Ir PI IP GDP HPIr --test-down --ct 
-r_EG_Y <- coint 2 Ir Yr PI IP GDP HPIr --test-down --ct  
+scatters Yr Ir Yc Ic --with-lines
 
-r_EG_IY <- coint 2 Ir Yr GDP PI U IP HPIr --test-down --ct
-r_joh <- coint2 2  Yr Ir PI U IP HPIr GDP --ct
+var 5 d_Yr d_Ir d_Yc d_Ic --lagselect 
+factors_var<-var 1 d_Yr d_Ir d_Yc d_Ic --nc
+factors_fr_vecm_1<-vecm 1 4 Yr Ir Yc Ic --nc
 
-#vecm
-var 2 d_Yr d_Ir d_PI d_U d_IP d_HPIr d_GDP FEDR --lagselect 
-r_vecm <- vecm 1 2 Yr Ir; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP HPIr  --crt
+factors_EG_I <- coint 2 Ir Ic 
+factors_EG_Y <- coint 2 Yr Yc 
+factors_EG_IY <- coint 2 Ir Ic Yr Yc 
+factors_joh<- coint2 2 Yr Ir Yc Ic 
 
-vecm 1 2 Yr Ir HPIr; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP  --crt
+#macro and factors
 
-restrict
-b[1,1] = 0
-b[1,2] = 0
-b[1,4] = 1
-b[2,1] = 1
-b[2,4] = 0
-b[2,5] = 0
-b[2,6] = 0
-b[2,7] = 0
-end restrict
+EG_Ic<-  coint 0    Ic       IP GDP HPIr --ct 
+EG_IcYc<-coint 0 Yc Ic       IP GDP       --ct
+EG_Ir<-  coint 0       Ir Yr IP GDP HPIr  --ct 
 
-#c factors
-
-coint 2 Ic IP U GDP PI HPIr --test-down --ct
-
-#? nevyhodit U PI
-
-coint 2 Ic Yc GDP --test-down --ct
+coint2 2  IP GDP  HPIr --crt
+#no cointegration here.
 
 
+var 10  d_Ic d_Ir d_Yc d_Yr d_IP d_GDP d_HPIr; Ic Ir Yc Yr IP GDP HPIr  --lagselect
+#reccoments maximum
 
-coint 2 Yr Ir Yc GDP U IP --test-down --ct
+var 10  d_Ic d_Ir d_Yc d_Yr d_IP d_GDP d_HPIr   --lagselect
+#LR AIC reccoments maximum, BIC HQC recommends 1
 
-# coint 2 Ir PI IP GDP HPIr --test-down --ct 
-#pryč coint 2 Yr Ir PI IP GDP HPIr FEDR U --test-down --ct  
-# coint 2 Yc Ic GDP --test-down --ct
-# coint 2 Ic IP GDP HPIr --test-down --ct
+joh_IIYY <- coint2 1 Yr Ir Yc Ic IP GDP HPIr --ct
+#indicates rank 3 
+ 
+vecm 2 3 Yr Ir Yc Ic IP GDP HPIr --crt
+# lag 2 corresponds to lag 1 pf var
+
+vecm_rest <-restrict --full
+    b[1,Yr]=1
+    b[2,Yr]=-0.12
+    b[3,Yr]=0
+
+    b[1,Ir]=0
+    b[2,Ir]=1 
+    b[3,Ir]=0
+
+    b[1,Yc]=0 
+    b[2,Yc]=0
+    b[3,Yc]=1 
+
+    b[2,Ic]=0 #Ic
+#    b[3,Ic]=0
+
+end restrict    
+# not significant
+
+series EC1 = $ec[,1]-mean($ec[,1])
+series EC2 = $ec[,2]-mean($ec[,2])
+series EC3 = $ec[,3]-mean($ec[,3])
+
+var 1 d_Yr d_Ir d_Yc d_Ic d_IP d_GDP d_HPIr EC1 EC2 EC3
+
+
+
+
+
+
+
+
+
+
+#puvodni
+# vecm 1 2 Yr Ir; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP HPIr  --crt
+
 
 
