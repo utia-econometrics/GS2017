@@ -2,27 +2,24 @@ open preprocess.xlsx --sheet=7 --quiet
 setobs 4 1991:1 --time-series
 diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
 
-#macro static analysis
-macro_corr <- corr d_GDP d_PI d_U d_IP d_HPIr d_HPIc FEDR d_Yr d_Ir d_Yc d_Ic
-ols d_GDP const d_PI d_U d_IP d_HPIr  FEDR
-ols d_PI const d_GDP  d_U d_IP d_HPIr  FEDR
-ols d_U const d_GDP d_PI d_IP d_HPIr  FEDR
-ols d_IP const d_GDP d_PI d_U d_HPIr FEDR
-ols d_HPIr const d_GDP d_PI d_U d_IP   FEDR
-ols FEDR const d_GDP d_PI d_U d_IP d_HPIr  
+#DESC STAT
 
-#detrending
+#detrending of trended vars
 ols GDP const time
 detrGDP=GDP-$coeff[2]*time
 
 ols PI const time
 detrPI=PI-$coeff[2]*time
 
-#graphs of macro vars
+#graphs 
+scatters detrGDP IP U HPIr detrPI FEDR --with-lines
+scatters Yr Ir Yc Ic --with-lines
+# !!! scatters have to be performed manually
 
-macro_plot <- scatters detrGDP IP U HPIr  detrPI FEDR --with-lines
+#UNIT ROOT
 
-#macro dynamic analysis
+adf 12 FEDR --c --ct --test-down=AIC
+#trend stationary
 
 adf 12 GDP --c --ct --test-down=AIC 
 adf 12 PI --c --ct --test-down=AIC 
@@ -30,55 +27,50 @@ adf 12 U --c --ct --test-down=AIC
 adf 12 IP --c --ct --test-down=AIC 
 adf 12 HPIr --c --ct --test-down=AIC 
 adf 12 HPIc --c --ct --test-down=AIC 
-adf 12 FEDR --c --ct --test-down=AIC
-
-macro_EG <- coint 4 IP PI U HPIr GDP  --ct --test-down 
-ols IP const time PI U HPIr GDP 
-macro_EG_u=$uhat
-
-var 2 d_GDP d_PI d_U d_IP d_HPIr FEDR --lagselect
-macro_joh<- coint2 2  PI U IP HPIr GDP --ct
-
-#factors
-
 adf 12 Yr --c --ct --test-down=AIC 
 adf 12 Ir --c --ct --test-down=AIC 
 adf 12 Yc --c --ct --test-down=AIC 
 adf 12 Ic --c --ct --test-down=AIC 
+#unit root not rejected
 
-scatters Yr Ir Yc Ic --with-lines
+#COINTEGRATION
 
-var 5 d_Yr d_Ir d_Yc d_Ic --lagselect 
-factors_var<-var 1 d_Yr d_Ir d_Yc d_Ic --nc
-factors_fr_vecm_1<-vecm 1 4 Yr Ir Yc Ic --nc
+#macro alone 
+
+macro_EG <- coint 4 IP PI U HPIr GDP  --ct --test-down 
+var 10 GDP PI U IP HPIr; FEDR --lagselect
+macro_joh<- coint2 2  PI U IP HPIr GDP --ct
+
+#factors
 
 factors_EG_I <- coint 2 Ir Ic 
 factors_EG_Y <- coint 2 Yr Yc 
 factors_EG_IY <- coint 2 Ir Ic Yr Yc 
+
+var 10 Yr Ir Yc Ic --lagselect 
 factors_joh<- coint2 2 Yr Ir Yc Ic 
 
 #macro and factors
 
-coint 0 Ic       U PI IP GDP HPIr --ct 
-coint 0    Ir    U PI IP GDP HPIr --ct 
-coint 0    Yc    U PI IP GDP HPIr --ct 
-coint 0    Yr    U PI IP GDP HPIr --ct 
+coint 0 Ic           U PI IP GDP HPIr --ct 
+coint 0    Ir        U PI IP GDP HPIr --ct 
+coint 0       Yc     U PI IP GDP HPIr --ct 
+coint 0          Yr  U PI IP GDP HPIr --ct 
+#only Ix convincingly cointegrated
 
-
-
+#removving U and PI without which the cointegration is present
 EG_Ic<-  coint 0 Ic         IP GDP HPIr --ct 
-EG_Ir<-  coint 0    Ir    IP GDP HPIr --ct 
-
+EG_Ir<-  coint 0    Ir      IP GDP HPIr --ct 
 
 var 10 Ic Ir Yc Yr IP GDP HPIr  --lagselect
-coint2 2 IP GDP  HPIr --ct
+coint2 2 IP GDP HPIr --ct
 #no cointegration here.
 
-joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
+joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr --ct
+joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr; d_U(-1) d_PI(-1) FEDR(-1) --ct
 #indicates rank 3 
 
 vecm 2 3 Ic Ir Yc Yr IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
-# lag 2 corresponds to lag 1 pf var
 
 restrict --full
     b[1,Ic]=1
@@ -90,16 +82,16 @@ restrict --full
     b[1,Yc]=0
     b[2,Yc]=0
     b[3,Yc]=1
-    b[2,IP]=1
-end restrict    
-    
+    b[2,IP]=0
+end restrict
+
 series EC1 = $ec[,1]
 series EC2 = $ec[,2]
 series EC3 = $ec[,3]
 
+list ALL_ENDO = d_Ic(-1) d_Ir(-1) d_Yc(-1) d_Yr(-1) 
 list ALL_EXO = d_U(-1) d_PI(-1) d_IP(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) 
 list ALL_EC=EC1 EC2 EC3  	
-list ALL_ENDO = d_Ic(-1) d_Ir(-1) d_Yc(-1) d_Yr(-1) 
 
 #replication of vecm
 system method=fiml
@@ -109,39 +101,23 @@ system method=fiml
     equation d_Yr const ALL_ENDO ALL_EXO ALL_EC
 end system
 
-ll_orig = $lnl
 
-
-#delete insignificant except for const, EC and own lags
+#only significant , own lags, ECs and consts
 
 system method=fiml
-    equation d_Ic const d_Ic(-1) d_Yc(-1) d_PI(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const d_Ir(-1) d_Ic(-1) d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yc const d_Yc(-1) d_Ic(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
-    equation d_Yr const d_Yr(-1) d_Ir(-1) FEDR(-1) EC1 EC2 EC3
-end system
-
-#next iteration
-system method=fiml
-    equation d_Ic const d_Ic(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const d_Ir(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yc const d_Yc(-1) d_Ic(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
-    equation d_Yr const d_Ir(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const d_Ic(-1) d_Yc(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const d_Ir(-1) d_Yc(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yc const d_Yc(-1) d_Yr(-1) d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yr const d_Yr(-1) d_Ir(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
 end system
 
 #final iteration
+
 system method=fiml
-    equation d_Ic const d_Ic(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir d_Ir(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
-    equation d_Yc const d_Yc(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
-    equation d_Yr const d_Ir(-1) FEDR(-1) EC2 EC3
+    equation d_Ic d_Ic(-1) d_Yc(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir  d_Ir(-1) d_Yc(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2
+    equation d_Yc const d_Yc(-1)  d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC3
+    equation d_Yr const d_Ir(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
 end system
-
-
-
-
-#puvodni
-# vecm 1 2 Yr Ir; d_Yr(-1) d_GDP(-1) FEDR(-1) d_HPIr(-1); PI GDP IP HPIr  --crt
-
 
 
