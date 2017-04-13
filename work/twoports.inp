@@ -59,56 +59,83 @@ factors_joh<- coint2 2 Yr Ir Yc Ic
 
 #macro and factors
 
-EG_Ic<-  coint 0    Ic       IP GDP HPIr --ct 
-EG_IcYc<-coint 0 Yc Ic       IP GDP       --ct
-EG_Ir<-  coint 0       Ir Yr IP GDP HPIr  --ct 
+coint 0 Ic       U PI IP GDP HPIr --ct 
+coint 0    Ir    U PI IP GDP HPIr --ct 
+coint 0    Yc    U PI IP GDP HPIr --ct 
+coint 0    Yr    U PI IP GDP HPIr --ct 
 
-coint2 2  IP GDP  HPIr --crt
+
+
+EG_Ic<-  coint 0 Ic         IP GDP HPIr --ct 
+EG_Ir<-  coint 0    Ir    IP GDP HPIr --ct 
+
+
+var 10 Ic Ir Yc Yr IP GDP HPIr  --lagselect
+coint2 2 IP GDP  HPIr --ct
 #no cointegration here.
 
-
-var 10  d_Ic d_Ir d_Yc d_Yr d_IP d_GDP d_HPIr; Ic Ir Yc Yr IP GDP HPIr  --lagselect
-#reccoments maximum
-
-var 10  d_Ic d_Ir d_Yc d_Yr d_IP d_GDP d_HPIr   --lagselect
-#LR AIC reccoments maximum, BIC HQC recommends 1
-
-joh_IIYY <- coint2 1 Yr Ir Yc Ic IP GDP HPIr --ct
+joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
 #indicates rank 3 
- 
-vecm 2 3 Yr Ir Yc Ic IP GDP HPIr --crt
+
+vecm 2 3 Ic Ir Yc Yr IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
 # lag 2 corresponds to lag 1 pf var
 
-vecm_rest <-restrict --full
-    b[1,Yr]=1
-    b[2,Yr]=-0.12
-    b[3,Yr]=0
-
+restrict --full
+    b[1,Ic]=1
+    b[2,Ic]=0
+    b[3,Ic]=0
     b[1,Ir]=0
-    b[2,Ir]=1 
+    b[2,Ir]=1
     b[3,Ir]=0
-
-    b[1,Yc]=0 
+    b[1,Yc]=0
     b[2,Yc]=0
-    b[3,Yc]=1 
-
-    b[2,Ic]=0 #Ic
-#    b[3,Ic]=0
-
+    b[3,Yc]=1
+    b[2,IP]=1
 end restrict    
-# not significant
+    
+series EC1 = $ec[,1]
+series EC2 = $ec[,2]
+series EC3 = $ec[,3]
 
-series EC1 = $ec[,1]-mean($ec[,1])
-series EC2 = $ec[,2]-mean($ec[,2])
-series EC3 = $ec[,3]-mean($ec[,3])
+list ALL_EXO = d_U(-1) d_PI(-1) d_IP(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) 
+list ALL_EC=EC1 EC2 EC3  	
+list ALL_ENDO = d_Ic(-1) d_Ir(-1) d_Yc(-1) d_Yr(-1) 
 
-var 1 d_Yr d_Ir d_Yc d_Ic d_IP d_GDP d_HPIr EC1 EC2 EC3
+#replication of vecm
+system method=fiml
+    equation d_Ic const ALL_ENDO ALL_EXO ALL_EC
+    equation d_Ir const ALL_ENDO ALL_EXO ALL_EC
+    equation d_Yc const ALL_ENDO ALL_EXO ALL_EC
+    equation d_Yr const ALL_ENDO ALL_EXO ALL_EC
+end system
+
+ll_orig = $lnl
 
 
+#delete insignificant except for const, EC and own lags
 
+system method=fiml
+    equation d_Ic const d_Ic(-1) d_Yc(-1) d_PI(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const d_Ir(-1) d_Ic(-1) d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yc const d_Yc(-1) d_Ic(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
+    equation d_Yr const d_Yr(-1) d_Ir(-1) FEDR(-1) EC1 EC2 EC3
+end system
 
+#next iteration
+system method=fiml
+    equation d_Ic const d_Ic(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const d_Ir(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yc const d_Yc(-1) d_Ic(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
+    equation d_Yr const d_Ir(-1) FEDR(-1) EC1 EC2 EC3
+end system
 
-
+#final iteration
+system method=fiml
+    equation d_Ic const d_Ic(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir d_Ir(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
+    equation d_Yc const d_Yc(-1) d_U(-1) d_HPIr(-1)  FEDR(-1) EC1 EC2 EC3
+    equation d_Yr const d_Ir(-1) FEDR(-1) EC2 EC3
+end system
 
 
 
