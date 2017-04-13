@@ -120,4 +120,16 @@ system method=fiml
     equation d_Yr const d_Ir(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
 end system
 
+full_ll = $lnl
 
+#without U
+system method=fiml
+    equation d_Ic d_Ic(-1) d_Yc(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir  d_Ir(-1) d_Yc(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2
+    equation d_Yc const d_Yc(-1)  d_HPIr(-1)  FEDR(-1) EC1 EC3
+    equation d_Yr const d_Ir(-1)  FEDR(-1) EC1 EC2 EC3
+end system
+
+wu_ll = $lnl
+printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-wu_ll), \
+pvalue(X, 2, 2*(full_ll-wu_ll))
