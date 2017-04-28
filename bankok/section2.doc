@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Converted document</title>
+	<meta name="generator" content="LibreOffice 5.3.1.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2017-04-28T16:59:06.912150958"/>
+	<meta name="create-date" content="2017-04-28"/>
+	<style type="text/css">
+		p { font-variant: normal; color: #000000; font-family: sans-serif; font-style: normal; font-weight: normal }
+		h1 { font-variant: normal; color: #000000 }
+		h1.western { font-style: normal }
+		h1.cjk { font-family: sans-serif; font-style: normal }
+		h1.ctl { font-family: sans-serif; font-style: normal }
+		h2 { font-variant: normal; color: #000000 }
+		h2.western { font-style: normal }
+		h2.cjk { font-family: "Noto Sans CJK SC Regular"; font-style: normal }
+		h2.ctl { font-family: "FreeSans"; font-style: normal }
+		a:link { color: #0030c0; text-decoration: none }
+		a:visited { color: #603090; text-decoration: none }
+	</style>
+</head>
+<body lang="en-US" text="#000000" link="#0030c0" vlink="#603090" bgcolor="#f9f9f9" dir="ltr">
+<div id="globalWrapper" dir="ltr" style="background: #ffffff">
+	<p style="margin-left: 0.05in; margin-right: 0.05in; margin-top: 0.05in; margin-bottom: 0.05in">
+	<span style="display: inline-block; border: none; padding: 0in">Similarly
+	to (cite vasicek), we assume that the default of a loan happens when</span></p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>A</i> &lt; <i>B</i>
+	</span></font>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif"><i>A</i></font> is the value the
+	debtor’s (hypothetical) assets and <font face="DejaVu Serif, serif"><i>B</i></font>
+	is the value of his debts. The recovery rate is, in line with
+	(Pythkin 2003)k computed as </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>R</i> = (min(<i>P</i>, <i>p</i>))/(<i>p</i>) = min(<i>p</i><sup> − 1</sup><i>P</i>, 1)
+	</span></font>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif"><i>p</i></font> is the outstanding
+	principle of the loan and <font face="DejaVu Serif, serif"><i>P</i></font>
+	is the price of the collateral. </span>
+	</p>
+	<p style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">As
+	it is usual, we assume that </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>A</i> = exp{<i>X</i> + <i>Z</i>}, 
+	<i>P</i> = exp{<i>H</i> + <i>E</i>} </span></font>
+	</p>
+	<p style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif"><i>X</i></font><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>H</i></font>
+	are the factors, common for all the loans, and <font face="DejaVu Serif, serif"><i>Z</i></font><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>E</i></font>
+	are mutually independent normally distributed individual factors,
+	specific for each loan. For simplicity, we assume that <font face="DejaVu Serif, serif"><i>B</i></font>
+	is common for all the loans. </span>
+	</p>
+	<p style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">If
+	the loan portfolio is large and homogeneous, then the default rate
+	(sometimes imprecisely referenced as probability of default - PD) of
+	a large homogeneous loan portfolio may approximated as </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>Q</i> = (number
+	of defaults)/(number of loans)≐ℙ[<i>A</i> &lt; <i>B</i>|<i>Y</i>] = <i>φ</i>( − <i>Y</i>), 
+	<i>Y</i> = (<i>X</i> − log<i>B</i>)/(<i>ρ</i>) </span></font>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif"><i>φ</i></font> is a standard
+	normal c.d.f. and <font face="DejaVu Serif, serif"><i>ρ</i></font>
+	is the standard deviation of <font face="DejaVu Serif, serif"><i>Z</i></font>.
+	The loss given default (LGD) - another quantity of usual interest -
+	comes out as </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in; line-height: 95%">
+	<span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>G</i> = (total
+	loss of porfolio)/(number of
+	defaults)≐𝔼[1 − <i>R</i>|<i>I</i>] = 1 − 𝔼[min(exp{<i>I</i> + <i>E</i>}, 1) = <i>η</i>(<i>I</i>;<i>σ</i>)
+	  <i>I</i> = <i>H</i> − log<i>p</i>, 
+	<i>η</i>(<i>ι</i>;<i>σ</i>) = <i>e</i><sup><i>ι</i></sup>∫<sub> − ∞</sub><sup> − </sup><sup><i>ι</i></sup><i>φ</i>((<i>x</i>)/(<i>ρ</i>))<i>e</i><sup><i>x</i></sup><i>dx</i> = <i>φ</i>( − (<i>ι</i>)/(<i>σ</i>)) − exp{<i>ι</i> + (1)/(2)<i>σ</i><sup>2</sup>}<i>φ</i>( − (<i>ι</i>)/(<i>σ</i>) − <i>σ</i>)
+	</span></font>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif"><i>σ</i></font> is the standard
+	deviation of <font face="DejaVu Serif, serif"><i>E</i></font>. For
+	more detailed explanation, see either [GŠ FU 2012] or [Smid, Martin
+	and Dufek, Jaroslav, Multi-Period Factor Model of a Loan Portfolio
+	(July 10, 2016). Available at SSRN:
+	http://dx.doi.org/10.2139/ssrn.2703884]. </span>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">As
+	for the dynamics, we suppose that the vector <font face="DejaVu Serif, serif">(</font><font face="DejaVu Serif, serif"><i>X</i></font><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>B</i></font><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>H</i></font><font face="DejaVu Serif, serif">)</font>
+	follows a VAR model, i.e. </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif">(<i>X</i><sub><i>t</i></sub>, <i>B</i><sub><i>t</i></sub>, <i>H</i><sub><i>t</i></sub>) = Γ<i>U</i><sub><i>t</i></sub> + ℰ<sub><i>t</i></sub>
+	</span></font>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	<font face="DejaVu Serif, serif">Γ</font> is unknown deterministic
+	matrix parameter, ℰ<sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	is a Gaussian white noise and where the regressors <font face="DejaVu Serif, serif"><i>U</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	are allowed to include constants, trends, lagged values and
+	exogenous variables. Consequently, </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>Q</i><sub><i>t</i></sub> = <i>φ</i>( − <i>Y</i><sub><i>t</i></sub>) = <i>φ</i>( − [Γ<sup><i>Q</i></sup><i>U</i><sub><i>i</i></sub> + <i>ϵ</i><sub>1, </sub><sub><i>t</i></sub>]), 
+	</span></font>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>G</i><sub><i>t</i></sub> = <i>η</i>(<i>I</i><sub><i>t</i></sub>;<i>σ</i>) = <i>η</i>(Γ<sup><i>G</i></sup><i>U</i><sub><i>i</i></sub> + <i>ε</i><sub>2, </sub><sub><i>t</i></sub>;<i>σ</i>)
+	</span></font>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">for
+	some vector parameters \strikeout off\uuline off\uwave off<font face="DejaVu Serif, serif">Γ</font><sup><font face="DejaVu Serif, serif"><i>Q</i></font></sup>\uuline
+	default\uwave default and <font face="DejaVu Serif, serif">Γ</font><sup><font face="DejaVu Serif, serif"><i>G</i></font></sup>
+	and a Gaussian white noise <font face="DejaVu Serif, serif">(</font><font face="DejaVu Serif, serif"><i>ϵ</i></font><sub><font face="DejaVu Serif, serif">1</font></sub><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>ε</i></font><sub><font face="DejaVu Serif, serif">2</font></sub><font face="DejaVu Serif, serif">)</font>.
+	</span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">Once
+	<font face="DejaVu Serif, serif"><i>Q</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	and <font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	are observable, the factors might be got by transformation</span></p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>Y</i><sub><i>t</i></sub> =  − <i>φ</i><sup> − 1</sup>(<i>Q</i><sub><i>t</i></sub>), 
+	<i>I</i><sub><i>t</i></sub> = <i>η</i><sup> − 1</sup>(<i>G</i><sub><i>t</i></sub>;<i>σ</i>)
+	</span></font>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">where
+	the (unknown) value of <font face="DejaVu Serif, serif"><i>σ</i></font>
+	might be guessed e.g. from the volatility of a house price index and
+	the average default rate - see the Appendix for details.
+	Consequently, the parameters <font face="DejaVu Serif, serif">Γ</font><sup><font face="DejaVu Serif, serif">•</font></sup>
+	and the variance matrix of <font face="DejaVu Serif, serif"><i>ϵ</i></font>
+	may be estimated by standard techniques. For the proof of strict
+	monotonicity of <font face="DejaVu Serif, serif"><i>η</i></font><font face="DejaVu Serif, serif">(•;</font><font face="DejaVu Serif, serif"><i>σ</i></font><font face="DejaVu Serif, serif">), </font>
+	see Appendix of [GŠ FÚ 2012]. </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">If,
+	instead of <font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif">, </font>
+	the charge-off rate </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif"><i>L</i><sub><i>t</i></sub> = (total
+	loss of porfolio)/(number of loans) </span></font>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">is
+	observed, <font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	may be easily computed using the relation <font face="DejaVu Serif, serif"><i>L</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif"> = </font><font face="DejaVu Serif, serif"><i>Q</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif">.</font>
+	</span>
+	</p>
+	<h1 class="western" style="margin-left: 0.05in; margin-right: 0.05in; margin-top: 0.05in; margin-bottom: 0.05in"><a name="toc-Section--1"></a>
+	<span style="display: inline-block; border: none; padding: 0in">Appendix
+	</span>
+	</h1>
+	<h2 class="western" align="center" style="margin-left: 0.05in; margin-right: 0.05in; margin-top: 0.05in; margin-bottom: 0.05in"><a name="toc-Subsection--1"></a>
+	<span style="display: inline-block; border: none; padding: 0in">Determination
+	of <font face="DejaVu Serif, serif"><i>σ</i></font> </span>
+	</h2>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">Assume
+	that, at time <i><font face="DejaVu Serif, serif">t</i></font>, the
+	portfolio contains multiple “generations” of loans namely the
+	loans originated at <i><font face="DejaVu Serif, serif">t</i></font><font face="DejaVu Serif, serif"> − 1, </font><i><font face="DejaVu Serif, serif">t</i></font><font face="DejaVu Serif, serif"> − 2, …, </font><i><font face="DejaVu Serif, serif">t</i></font><font face="DejaVu Serif, serif"> − </font><i><font face="DejaVu Serif, serif">k</i></font>
+	(the loans older than <i><font face="DejaVu Serif, serif">k</i></font>
+	are no longer present in the portfolio). Assume further that the
+	inflow of fresh loans into the portfolio is constant in time.
+	Finally, assume that all the collaterals securing loans from the
+	generation which started at <i><font face="DejaVu Serif, serif">s</i></font>
+	have been bought for the same price <font face="DejaVu Serif, serif">exp{</font><i><font face="DejaVu Serif, serif">H</i></font><font face="DejaVu Serif, serif"><i><sub>s</i></font></sub><font face="DejaVu Serif, serif">}</font>
+	and that the price of each of them at <i><font face="DejaVu Serif, serif">t</i></font>
+	is <font face="DejaVu Serif, serif">exp{</font><i><font face="DejaVu Serif, serif">H</i></font><font face="DejaVu Serif, serif"><i><sub>t</i></font></sub><font face="DejaVu Serif, serif"> + (</font><i><font face="DejaVu Serif, serif">S</i></font><font face="DejaVu Serif, serif"><i><sub>t</i></font></sub><font face="DejaVu Serif, serif"> − </font><i><font face="DejaVu Serif, serif">S</i></font><font face="DejaVu Serif, serif"><i><sub>s</i></font></sub><font face="DejaVu Serif, serif">)}</font>
+	where <i><font face="DejaVu Serif, serif">S</i></font> is a normal
+	random walk, specific to the loan, with variance <i><font face="DejaVu Serif, serif">θ</i></font><font face="DejaVu Serif, serif"><sup>2</font></sup><font face="DejaVu Serif, serif">, </font>
+	</span>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">Denote
+	<font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	the age of a loan randomly chosen at <font face="DejaVu Serif, serif"><i>t</i></font>.
+	Clearly, after <font face="DejaVu Serif, serif"><i>k</i></font>
+	periods, the ratio of the generations within the portfolio
+	is<font face="DejaVu Serif, serif">1:(1 − </font><font face="DejaVu Serif, serif"><i>q</i></font><font face="DejaVu Serif, serif">):…:(1 − </font><font face="DejaVu Serif, serif"><i>q</i></font><font face="DejaVu Serif, serif">)</font><sup><font face="DejaVu Serif, serif"><i>k</i></font></sup><sup><font face="DejaVu Serif, serif"> − 1</font></sup><font face="DejaVu Serif, serif">.</font>which
+	unequely determines <font face="DejaVu Serif, serif"><i>π</i></font><sub><font face="DejaVu Serif, serif"><i>i</i></font></sub><font face="DejaVu Serif, serif"> = ℙ[</font><font face="DejaVu Serif, serif"><i>G</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif"> = </font><font face="DejaVu Serif, serif"><i>i</i></font><font face="DejaVu Serif, serif">]</font>.
+	</span>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">Let
+	<font face="DejaVu Serif, serif"><i>P</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub>
+	be the price of a randomly chosen collateral. By the Law of Iterated
+	Variance, we then get </span>
+	</p>
+	<p align="center" style="margin-top: 0.05in; margin-bottom: 0.05in; line-height: 95%">
+	<span style="display: inline-block; border: none; padding: 0in"><font face="DejaVu Serif, serif">σ̃<sup>2</sup> = var(log<i>P</i><sub><i>t</i></sub>|<i>H</i>) = var(𝔼(log<i>P</i><sub><i>t</i></sub>|<i>G</i><sub><i>t</i></sub>, <i>H</i>)|<i>H</i>) + 𝔼(var(log<i>P</i><sub><i>t</i></sub>|<i>G</i><sub><i>t</i></sub>, <i>H</i>)|<i>H</i>)
+	 
+	 = var(𝔼(<i>S</i><sub><i>t</i></sub> − <i>S</i><sub><i>G</i></sub>|<i>G</i>, <i>H</i>)|<i>H</i>) + 𝔼(var(<i>S</i><sub><i>t</i></sub> − <i>S</i><sub><i>G</i></sub>|<i>G</i>, <i>H</i>)|<i>H</i>) = <i>θ</i><sup>2</sup> 𝔼<b>G</b><sub><b>t</b></sub><b> = </b><i>θ</i><sup>2</sup>∑<sub><i>i</i></sub><sub> = 1</sub><sup><i>k</i></sup><i>iπ</i><sub><i>i</i></sub>, 
+	</span></font>
+	</p>
+	<p align="left" style="margin-top: 0.05in; margin-bottom: 0.05in"><span style="display: inline-block; border: none; padding: 0in">Even
+	though the ℒ<font face="DejaVu Serif, serif">(log</font><font face="DejaVu Serif, serif"><i>P</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif">|</font><font face="DejaVu Serif, serif"><i>H</i></font><font face="DejaVu Serif, serif">)</font>
+	is a mixture of normal distributions rather than a normal
+	distribution, it is thin tailed so it will not make a big harm to
+	approximate it by <font face="DejaVu Serif, serif">N(</font><font face="DejaVu Serif, serif"><i>H</i></font><sub><font face="DejaVu Serif, serif"><i>t</i></font></sub><font face="DejaVu Serif, serif">, </font><font face="DejaVu Serif, serif"><i>σ̃</i></font><sup><font face="DejaVu Serif, serif">2</font></sup><font face="DejaVu Serif, serif">)</font>,
+	</span>
+	</p>
+</div>
+</body>
+</html>
