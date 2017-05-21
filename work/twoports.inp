@@ -54,9 +54,13 @@ factors_joh<- coint2 2 Yr Ir Yc Ic
 
 coint 0 Ic           U PI IP GDP HPIr --ct 
 coint 0    Ir        U PI IP GDP HPIr --ct 
-coint 0       Yc     U PI IP GDP HPIr --ct 
-coint 0          Yr  U PI IP GDP HPIr --ct 
+coint 2       Yc     U PI IP HPIr --ct
+coint 3          Yr  U HPIr FEDR --ct 
 #only Ix convincingly cointegrated
+
+coint 4 Yr Ir        U GDP HPIr FEDR --test-down --ct 
+coint 2       Yc     U PI IP HPIr --ct
+coint 3          Yr  U HPIr FEDR --ct 
 
 #removving U and PI without which the cointegration is present
 EG_Ic<-  coint 0 Ic         IP GDP HPIr --ct 
@@ -65,6 +69,9 @@ EG_Ir<-  coint 0    Ir      IP GDP HPIr --ct
 var 10 Ic Ir Yc Yr IP GDP HPIr  --lagselect
 coint2 2 IP GDP HPIr --ct
 #no cointegration here.
+
+coint 4 Yc Yr Ir Ic HPIc IP --ct --test-down
+coint2 2 Yc Yr Ir Ic HPIc IP --ct
 
 joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr --ct
 joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr; d_U(-1) d_PI(-1) FEDR(-1) --ct
@@ -133,3 +140,4 @@ end system
 wu_ll = $lnl
 printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-wu_ll), \
 pvalue(X, 2, 2*(full_ll-wu_ll))
+
