@@ -140,4 +140,3 @@ end system
 wu_ll = $lnl
 printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-wu_ll), \
 pvalue(X, 2, 2*(full_ll-wu_ll))
-
