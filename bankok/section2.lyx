@@ -112,7 +112,7 @@ where
 As it is usual, we assume that 
 \begin_inset Formula 
 \[
-A=\exp\{X+Z\},\qquad P=\exp\{H+E\}
+A=\exp\{X+Z\},\qquad TBDB,\qquad P=\exp\{H+E\}
 \]
 
 \end_inset
@@ -167,8 +167,8 @@ where
 \begin_layout Standard
 \begin_inset Formula 
 \begin{multline*}
-G=\frac{\text{total loss of porfolio}}{\text{\text{number of defaults}}}\doteq\mathbb{E}[1-R|I]=1-\mathbb{E}[\min(\exp\{I+E\},1)=\eta(I;\sigma)\\
-I=H-\log p,\qquad\eta(\iota;\sigma)=e^{\iota}\int_{-\infty}^{-\iota}\varphi(\frac{x}{\rho})e^{x}dx=\varphi(-\frac{\iota}{\sigma})-\exp\{\iota+\frac{1}{2}\sigma^{2}\}\varphi(-\frac{\iota}{\sigma}-\sigma)
+G=\frac{\text{total loss of porfolio}}{\text{\text{number of defaults}}}\doteq\mathbb{E}[1-R|I]=1-\mathbb{E}[\min(\exp\{I+E\},1)]=\eta(I;\sigma)\\
+I=H-\log p,\qquad\eta(\iota;\sigma)=e^{\iota}\int_{-\infty}^{-\iota}\varphi(\frac{x}{\sigma})e^{x}dx=\varphi(-\frac{\iota}{\sigma})-\exp\{\iota+\frac{1}{2}\sigma^{2}\}\varphi(-\frac{\iota}{\sigma}-\sigma)
 \end{multline*}
 
 \end_inset
@@ -195,6 +195,9 @@ As for the dynamics, we suppose that the vector
 
  follows a VAR model, i.e.
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 (X_{t},B_{t},H_{t})=\Gamma U_{t}+\mathcal{E}_{t}
@@ -417,7 +420,7 @@ Denote
 \begin_inset Formula $1:(1-q):\dots:(1-q)^{k-1}.$
 \end_inset
 
-which unequely determines 
+which uniquely determines 
 \begin_inset Formula $\pi_{i}=\mathbb{P}[G_{t}=i]$
 \end_inset
 
