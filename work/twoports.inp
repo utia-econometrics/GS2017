@@ -81,6 +81,9 @@ joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr; d_U(-1) d_PI(-1) FEDR(-1) --ct
 
 vecm 2 3 Ic Ir Yc Yr IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
 
+
+
+
 restrict --full
     b[1,Ic]=1
     b[2,Ic]=0
@@ -91,7 +94,8 @@ restrict --full
     b[1,Yc]=0
     b[2,Yc]=0
     b[3,Yc]=1
-    b[2,IP]=0
+    b[1,Yr]=0
+    b[2,Yr]=0
 end restrict
 
 
@@ -112,25 +116,35 @@ system method=fiml
 end system
 
 
-#only significant , own lags, ECs and consts
+
+#without insignificatn exo
 
 system method=fiml
-    equation d_Ic const d_Ic(-1) d_Yc(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const d_Ir(-1) d_Yc(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yc const d_Yc(-1) d_Yr(-1) d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yr const d_Yr(-1) d_Ir(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const ALL_ENDO d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const ALL_ENDO d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yc const ALL_ENDO d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Yr const ALL_ENDO FEDR(-1) EC1 EC2 EC3
 end system
 
-full_ll = $lnl
+#without insignificatn endo
 
-#final iteration
 
 system method=fiml
-    equation d_Ic d_Ic(-1) d_Yc(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir  d_Ir(-1) d_Yc(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2
-    equation d_Yc const d_Yc(-1)  d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC3
-    equation d_Yr const d_Ir(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const d_Ic_1 d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const d_Ir_1 d_Yc_1 d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
+    equation d_Yc const d_Ir_1 d_Yc_1 d_HPIr(-1) d_U(-1) FEDR(-1) EC2 EC3
+    equation d_Yr const d_Ic_1 d_Ir_1 d_Yc_1 FEDR(-1) EC1 EC2 EC3
 end system
+
+#without insignificatn EC
+
+system method=fiml
+    equation d_Ic const d_Ic_1 d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
+    equation d_Ir const d_Ir_1 d_Yc_1 d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
+    equation d_Yc const d_Ir_1 d_Yc_1 d_HPIr(-1) d_U(-1) FEDR(-1)  EC2 EC3
+    equation d_Yr const d_Ic_1 d_Ir_1 d_Yc_1 FEDR(-1) EC1 EC2 EC3
+end system
+
 
 final_ll = $lnl
 printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-final_ll), \
