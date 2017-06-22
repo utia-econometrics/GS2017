@@ -44,24 +44,22 @@ coint 4       Yc     U PI IP GDP HPIr --ct --test-down --skip-df
 coint 4          Yr  U PI IP GDP HPIr --ct --test-down --skip-df
 coint 4       Yc Yr  U PI IP GDP HPIr --ct --test-down --skip-df
 
-
-#removving U and PI (without insignificant regressors)
+#removving insignificant regressors
 EG_Ic<-  coint 0 Ic          U PI IP GDP HPIr --ct --skip-df
 EG_Ir<-  coint 0    Ir         PI IP GDP HPIr --ct --skip-df
 EG_Y <-  coint 2       Yc Yr   PI IP     HPIr --ct  --skip-df
 
 
-
 #MODEL
 
-var 10 Yc Ic Yr Ir U PI IP GDP HPIr --lagselect
+var 5 Yc Ic Yr Ir U PI IP GDP HPIr --lagselect
 
 
 joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
 
 vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
 
-restrict #--full
+restrict --full
     b[1,Ic]=1
     b[1,Ir]=0
     b[1,Yc]=0
@@ -73,10 +71,10 @@ restrict #--full
     b[3,Ic]=0
     b[3,Ir]=0
     b[3,Yc]=1
-    b[3,GDP]=0
 end restrict
 
-#adding b[2,U]=0 and b[3,U]=0 would destroy full rank
+# adding     b[3,GDP]=0
+# b[2,U]=0 and b[3,U]=0 would destroy full rank
 
 
 series EC1 = $ec[,1]
@@ -99,8 +97,8 @@ end system
 
 system method=fiml
     equation d_Ic const ALL_ENDO d_HPIr(-1) FEDR(-1)  ALL_EC
-    equation d_Ir const ALL_ENDO d_HPIr(-1) FEDR(-1)  ALL_EC
-    equation d_Yc const ALL_ENDO d_U(-1)  d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Ir const ALL_ENDO FEDR(-1)  ALL_EC
+    equation d_Yc const ALL_ENDO d_U(-1) d_IP(-1) d_HPIr(-1) FEDR(-1)  ALL_EC
     equation d_Yr const ALL_ENDO d_U(-1) FEDR(-1)  ALL_EC
 end system
 
@@ -109,29 +107,22 @@ end system
 
 system method=fiml
     equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1)  ALL_EC
-    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1)  ALL_EC
-    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) ALL_EC
-    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  ALL_EC
+    equation d_Ir const d_Yc_1 FEDR(-1)  ALL_EC
+    equation d_Yc const d_Yc_1 d_U(-1) d_IP(-1)  d_HPIr(-1) FEDR(-1) ALL_EC
+    equation d_Yr const d_Ic_1 d_Ir_1  d_U(-1) FEDR(-1)  ALL_EC
 end system
 
-#without insignificant ECs
+##!!!FINAL!!! without insignificant ECs
+
 
 system method=fiml
-    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1) EC1 EC3
-    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1) EC2
-    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC3
-    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  EC2 EC3
+    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1)  EC1 EC3
+    equation d_Ir const d_Yc_1 FEDR(-1)  ALL_EC
+    equation d_Yc const d_Yc_1 d_U(-1) d_IP(-1)  d_HPIr(-1) FEDR(-1) ALL_EC
+    equation d_Yr const d_Ic_1 d_Ir_1  d_U(-1) FEDR(-1)  ALL_EC
 end system
 
 
-#!!!FINAL!!! -withdout FEDR in the first
-
-system method=fiml
-    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1)  EC1 EC3
-    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1) EC2
-    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC3
-    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  EC2 EC3
-end system
 
 
 matrix S=$sigma

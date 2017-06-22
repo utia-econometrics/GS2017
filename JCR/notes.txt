@@ -1,5 +1,9 @@
 
 
+Data
+some escounted, some log 
+
+
 Cointegration
 
 - regressons significant but resituals nonstationary, except of Ix
