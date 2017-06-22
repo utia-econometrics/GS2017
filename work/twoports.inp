@@ -42,34 +42,41 @@ coint 4 Ic           U PI IP GDP HPIr --ct --test-down --skip-df
 coint 4    Ir        U PI IP GDP HPIr --ct --test-down --skip-df
 coint 4       Yc     U PI IP GDP HPIr --ct --test-down --skip-df
 coint 4          Yr  U PI IP GDP HPIr --ct --test-down --skip-df
+coint 4       Yc Yr  U PI IP GDP HPIr --ct --test-down --skip-df
 
-#removving U and PI (without which the cointegration is present)
-EG_Ic<-  coint 0 Ic         IP GDP HPIr --ct 
-EG_Ir<-  coint 0    Ir      IP GDP HPIr --ct 
+
+#removving U and PI (without insignificant regressors)
+EG_Ic<-  coint 0 Ic          U PI IP GDP HPIr --ct --skip-df
+EG_Ir<-  coint 0    Ir         PI IP GDP HPIr --ct --skip-df
+EG_Y <-  coint 2       Yc Yr   PI IP     HPIr --ct  --skip-df
+
 
 
 #MODEL
 
-var 10 Yc Ic Yr Ir IP GDP HPIr --lagselect
+var 10 Yc Ic Yr Ir U PI IP GDP HPIr --lagselect
 
 
-joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr --ct
+joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
 
-vecm 2 3 Ic Ir Yc Yr IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
+vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
 
-restrict --full
+restrict #--full
     b[1,Ic]=1
-    b[2,Ic]=0
-    b[3,Ic]=0
     b[1,Ir]=0
-    b[2,Ir]=1
-    b[3,Ir]=0
     b[1,Yc]=0
-    b[2,Yc]=0
-    b[3,Yc]=1
     b[1,Yr]=0
+    b[2,Ic]=0
+    b[2,Ir]=1
+    b[2,Yc]=0
     b[2,Yr]=0
+    b[3,Ic]=0
+    b[3,Ir]=0
+    b[3,Yc]=1
+    b[3,GDP]=0
 end restrict
+
+#adding b[2,U]=0 and b[3,U]=0 would destroy full rank
 
 
 series EC1 = $ec[,1]
@@ -88,40 +95,44 @@ system method=fiml
     equation d_Yr const ALL_ENDO ALL_EXO ALL_EC
 end system
 
-
-
 #without insignificatn exo
 
 system method=fiml
-    equation d_Ic const ALL_ENDO d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const ALL_ENDO d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yc const ALL_ENDO d_HPIr(-1) d_U(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Yr const ALL_ENDO FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const ALL_ENDO d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Ir const ALL_ENDO d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Yc const ALL_ENDO d_U(-1)  d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Yr const ALL_ENDO d_U(-1) FEDR(-1)  ALL_EC
 end system
 
-#without insignificatn endo
+#without insignificant endo
 
 
 system method=fiml
-    equation d_Ic const d_Ic_1 d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const d_Ir_1 d_Yc_1 d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
-    equation d_Yc const d_Ir_1 d_Yc_1 d_HPIr(-1) d_U(-1) FEDR(-1) EC2 EC3
-    equation d_Yr const d_Ic_1 d_Ir_1 d_Yc_1 FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1)  ALL_EC
+    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) ALL_EC
+    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  ALL_EC
 end system
 
-#without insignificatn EC
+#without insignificant ECs
 
 system method=fiml
-    equation d_Ic const d_Ic_1 d_HPIr(-1) FEDR(-1) EC1 EC2 EC3
-    equation d_Ir const d_Ir_1 d_Yc_1 d_GDP(-1) d_HPIr(-1) FEDR(-1) EC1 EC2 
-    equation d_Yc const d_Ir_1 d_Yc_1 d_HPIr(-1) d_U(-1) FEDR(-1)  EC2 EC3
-    equation d_Yr const d_Ic_1 d_Ir_1 d_Yc_1 FEDR(-1) EC1 EC2 EC3
+    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1) EC1 EC3
+    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1) EC2
+    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC3
+    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  EC2 EC3
 end system
 
 
-final_ll = $lnl
-printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-final_ll), \
-pvalue(X, 2, 2*(full_ll-final_ll))
+#!!!FINAL!!! -withdout FEDR in the first
+
+system method=fiml
+    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1)  EC1 EC3
+    equation d_Ir const d_Yc_1 d_HPIr(-1) FEDR(-1) EC2
+    equation d_Yc const d_Ic d_Yc_1 d_U(-1) d_HPIr(-1) FEDR(-1) EC1 EC3
+    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  EC2 EC3
+end system
+
 
 matrix S=$sigma
 print S
@@ -140,9 +151,9 @@ endloop
 fcast 2017:1 2017:4 --dynamic
 
 
-
-
-
-
-
 #http://gretl.sourceforge.net/gretl-help/cmdref.html#fcast
+#final_ll = $lnl
+#printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-final_ll), \
+#pvalue(X, 2, 2*(full_ll-final_ll))
+
+

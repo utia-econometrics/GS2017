@@ -8,3 +8,5 @@ Cointegration found
 Ic vs macro
 Ir vs macro
 Ic vs Ir
+
+
