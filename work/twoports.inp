@@ -4,25 +4,10 @@ setobs 4 1991:1 --time-series
 diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
 
 smpl 1991:1 2016:4 
-#DESC STAT
 
-#detrending of trended vars
-ols GDP const time
-detrGDP=GDP-$coeff[2]*time
-
-ols PI const time
-detrPI=PI-$coeff[2]*time
-
-#graphs 
-scatters detrGDP IP U HPIr detrPI FEDR --with-lines
-scatters Yr Ir Yc Ic --with-lines
-# !!! scatters have to be performed manually
-
-#UNIT ROOT
+#UNIT ROOT TESTS
 
 adf 12 FEDR --c --ct --test-down=AIC
-#trend stationary
-
 adf 12 GDP --c --ct --test-down=AIC 
 adf 12 PI --c --ct --test-down=AIC 
 adf 12 U --c --ct --test-down=AIC 
@@ -39,50 +24,38 @@ adf 12 Ic --c --ct --test-down=AIC
 
 #macro alone 
 
-macro_EG <- coint 4 IP PI U HPIr GDP  --ct --test-down 
+macro_EG <- coint 4 IP PI U HPIr GDP  --ct --test-down --skip-df
 var 10 GDP PI U IP HPIr; FEDR --lagselect
 macro_joh<- coint2 2  PI U IP HPIr GDP --ct
 
-#factors
+#factors alone
 
-factors_EG_I <- coint 2 Ir Ic 
-factors_EG_Y <- coint 2 Yr Yc 
-factors_EG_IY <- coint 2 Ir Ic Yr Yc 
+factors_EG_I <- coint 4 Ir Ic  --ct --test-down --skip-df
+factors_EG_Y <- coint 4 Yr Yc  --ct --test-down --skip-df
 
 var 10 Yr Ir Yc Ic --lagselect 
 factors_joh<- coint2 2 Yr Ir Yc Ic 
 
-#macro and factors
+#individual factors and macro
 
-coint 0 Ic           U PI IP GDP HPIr --ct 
-coint 0    Ir        U PI IP GDP HPIr --ct 
-coint 2       Yc     U PI IP HPIr --ct
-coint 3          Yr  U HPIr FEDR --ct 
-#only Ix convincingly cointegrated
+coint 4 Ic           U PI IP GDP HPIr --ct --test-down --skip-df
+coint 4    Ir        U PI IP GDP HPIr --ct --test-down --skip-df
+coint 4       Yc     U PI IP GDP HPIr --ct --test-down --skip-df
+coint 4          Yr  U PI IP GDP HPIr --ct --test-down --skip-df
 
-coint 4 Yr Ir        U GDP HPIr FEDR --test-down --ct 
-coint 2       Yc     U PI IP HPIr --ct
-coint 3          Yr  U HPIr FEDR --ct 
-
-#removving U and PI without which the cointegration is present
+#removving U and PI (without which the cointegration is present)
 EG_Ic<-  coint 0 Ic         IP GDP HPIr --ct 
 EG_Ir<-  coint 0    Ir      IP GDP HPIr --ct 
 
-var 10 Ic Ir Yc Yr IP GDP HPIr  --lagselect
-coint2 2 IP GDP HPIr --ct
-#no cointegration here.
 
-coint 4 Yc Yr Ir Ic HPIc IP --ct --test-down
-coint2 2 Yc Yr Ir Ic HPIc IP --ct
+#MODEL
+
+var 10 Yc Ic Yr Ir IP GDP HPIr --lagselect
+
 
 joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr --ct
-joh <- coint2 2 Yr Ir Yc Ic IP GDP HPIr; d_U(-1) d_PI(-1) FEDR(-1) --ct
-#indicates rank 3 
 
 vecm 2 3 Ic Ir Yc Yr IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
-
-
-
 
 restrict --full
     b[1,Ic]=1

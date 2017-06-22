@@ -1,0 +1,10 @@
+
+
+Cointegration
+
+- regressons significant but resituals nonstationary, except of Ix
+
+Cointegration found
+Ic vs macro
+Ir vs macro
+Ic vs Ir

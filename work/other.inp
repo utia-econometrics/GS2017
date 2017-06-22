@@ -1,0 +1,16 @@
+open preprocess.xlsx --sheet=8 --quiet
+setobs 4 1991:1 --time-series
+
+diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
+
+smpl 1991:1 2016:4 
+
+#detrending of trended vars
+ols GDP const time
+detrGDP=GDP-$coeff[2]*time
+
+ols PI const time
+detrPI=PI-$coeff[2]*time
+
+scatters detrGDP IP U HPIr detrPI FEDR --with-lines
+
