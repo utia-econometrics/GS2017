@@ -76,10 +76,15 @@ end restrict
 # adding     b[3,GDP]=0
 # b[2,U]=0 and b[3,U]=0 would destroy full rank
 
+matrix beta=$jbeta
+
 
 series EC1 = $ec[,1]
 series EC2 = $ec[,2]
 series EC3 = $ec[,3]
+
+ols EC1 GDP(-1) Yr(-1) Ir(-1) Yc(-1) Ic(-1) PI(-1) U(-1) IP(-1) HPIr(-1)  time
+
 
 list ALL_ENDO = d_Ic(-1) d_Ir(-1) d_Yc(-1) d_Yr(-1) 
 list ALL_EXO = d_U(-1) d_PI(-1) d_IP(-1) d_GDP(-1) d_HPIr(-1) FEDR(-1) 
@@ -125,21 +130,41 @@ end system
 
 
 
+print beta
+
 matrix S=$sigma
 print S
 
-#matrix X=$vcv
-#print X
+
+scalar maxt = time[2016:4]
+print maxt
+
+
+#ols  d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1) EC3
+
+#matrix B=$coeff
+
 
 smpl full
 
-loop t=2017:1..2017:4
-    EC1[t] = EC1[2016:4]
-    EC2[t] = EC2[2016:4]
-    EC3[t] = EC3[2016:4]
-endloop
+#loop t=2017:1..2017:4
+#    EC1[t] = EC1[2016:4]
+#    EC2[t] = EC2[2016:4]
+#    EC3[t] = EC3[2016:4]
+#endloop
 
-fcast 2017:1 2017:4 --dynamic
+#tmp
+EC1[2017:1] = 14.087693
+EC2[2017:1] = 6.85049
+EC3[2017:1] = 10.11940
+
+EC1[2017:2] = 14.11154
+EC2[2017:2] = 6.846381
+EC3[2017:2] = 9.974288
+
+
+
+fcast 2017:1 2017:2  --dynamic
 
 
 #http://gretl.sourceforge.net/gretl-help/cmdref.html#fcast
