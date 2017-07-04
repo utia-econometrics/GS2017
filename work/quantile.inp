@@ -1,0 +1,18 @@
+open preprocess.xlsx --sheet=16 --quiet
+
+scalar clow = quantile(Lc,0.025)
+scalar chigh = quantile(Lc,0.975)
+scalar creg = quantile(Lc,0.999)
+
+print clow
+print chigh
+print creg
+
+scalar rlow = quantile(Lr,0.025)
+scalar rhigh = quantile(Lr,0.975)
+scalar rreg = quantile(Lr,0.999)
+
+print rlow
+print rhigh
+print rreg
+
