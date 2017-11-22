@@ -83,7 +83,10 @@ Methods
 \newcommand{\indep}[1]{{\perp\hspace{-2mm}\perp}#1}
 \end_inset
 
-Similarly to (cite vasicek), we assume that the default of a loan happens
+Similarly to (cite vasicek), we say that a loan 
+\emph on
+defaults
+\emph default
  when
 \begin_inset Formula 
 \[
@@ -100,28 +103,7 @@ where
 \begin_inset Formula $B$
 \end_inset
 
- is the value of his debts.
- The recovery rate is, in line with (Pythkin 2003), computed as 
-\begin_inset Formula 
-\[
-R=\frac{\min(P,p)}{p}=\min(p^{-1}P,1)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $p$
-\end_inset
-
- is the outstanding principal of the loan and 
-\begin_inset Formula $P$
-\end_inset
-
- is the price of the collateral.
-\end_layout
-
-\begin_layout Standard
-As in the Vasicek model, we assume that 
+ is the value of his debts, such that
 \begin_inset Formula 
 \begin{equation}
 A=\exp\{Y^{A}+Z^{A}\},\qquad B=\exp\{Y^{B}+Z^{B}\},\label{eq:abdef}
@@ -137,12 +119,32 @@ where,
 \begin_inset Formula $Z^{A},Z^{B}$
 \end_inset
 
- are individual factors such that 
-\begin_inset Formula $(Z^{A},Z^{B})$
+ are jointly normal individual factors.
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+recovery rate
+\emph default
+ is, in line with (Pythkin 2003), computed as 
+\begin_inset Formula 
+\[
+R=\frac{\min(P,p)}{p}=\min(p^{-1}P,1)
+\]
+
 \end_inset
 
- is joint normal.
- Analogously, we assume
+where 
+\begin_inset Formula $p$
+\end_inset
+
+ is the outstanding principal of the loan and 
+\begin_inset Formula $P$
+\end_inset
+
+ is the price of the collateral fulfilling
 \begin_inset Formula 
 \begin{equation}
 P=\exp\{X+E\}.\label{eq:pdef}
@@ -150,7 +152,7 @@ P=\exp\{X+E\}.\label{eq:pdef}
 
 \end_inset
 
-where 
+Here, 
 \begin_inset Formula $X$
 \end_inset
 
@@ -158,39 +160,89 @@ where
 \begin_inset Formula $E$
 \end_inset
 
- is another normally distributed individual factor, independent of 
-\begin_inset Formula $Z^{A},Z^{B}$
+ is a normally distributed individual factor, independent of 
+\begin_inset Formula $(Z^{A},Z^{B})$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Consider a large portfolio of loans with the same principal 
-\begin_inset Formula $p$
-\end_inset
-
- such that the individual factors corresponding to individual loans are
- mutually independent with the same parameter 
-\begin_inset Formula $\text{\rho}$
-\end_inset
-
-, then the default rate, usually called PD, defined as
+Now, consider an infinitely large portfolio of loans and define three important
+ quantities: the 
+\emph on
+default rate
+\emph default
+, usually imprecisely called probability of default (PD):
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-Q=\frac{\text{number of defaults}}{\text{\text{number of loans}}}
+Q=\text{\ensuremath{p\mathrm{lim_{\text{\# of loans}\rightarrow\infty}}}}\frac{\text{\# of defaults}}{\text{\text{\# of loans}}},
 \]
 
 \end_inset
 
-may be, thanks to the Law of Large Numbers applied to conditional distributions
- given the common factors, approximated as 
+the 
+\emph on
+loss given default
+\emph default
+, abbreviated as LGD:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{multline*}
+G=\text{\ensuremath{p\mathrm{lim_{\text{\# of loans}\rightarrow\infty}}}}\left[\frac{\text{total loss of the portfolio}}{\text{\# \text{of defaults}}}\right]
+\end{multline*}
+
+\end_inset
+
+and the 
+\emph on
+charge-off rate 
+\emph default
+(relative loss):
 \begin_inset Formula 
 \[
-Q\doteq\mathbb{P}[A<B|Y^{A},Y^{B}]=\mathbb{P}[Z^{A}-Z^{B}<Y^{B}-Y^{A}|Y^{A},Y^{B}]=\varphi(-Y),\qquad Y=\frac{Y^{A}-Y^{B}}{\rho}
+L=\text{\ensuremath{p\mathrm{lim_{\text{\# of loans}\rightarrow\infty}}}}\left[\frac{\text{total loss of the portfolio}}{\text{\# \text{of loans}}}\right]
+\]
+
+\end_inset
+
+Here, 
+\begin_inset Formula $p\mathrm{lim}$
+\end_inset
+
+ denotes limit in probability.
+ Not surprisingly, 
+\begin_inset Formula 
+\[
+L=QG.
+\]
+
+\end_inset
+
+(e.g.
+ by [kallenberg] Corollary 4.5.)
+\end_layout
+
+\begin_layout Standard
+Assume further, that the portfolio is homogeneous in the sense that the
+ debts in the loans have the same principal 
+\begin_inset Formula $p$
+\end_inset
+
+ and the same distribution of the individual factors.
+ If 
+\begin_inset Formula $(Z^{A},Z^{B})$
+\end_inset
+
+ is Gaussian, 
+\begin_inset Formula 
+\[
+Q=\varphi(-Y),\qquad Y=\frac{Y^{A}-Y^{B}}{\rho},
 \]
 
 \end_inset
@@ -208,28 +260,20 @@ where
 \begin_inset Formula $Z^{A}-Z^{B}$
 \end_inset
 
- (see also FU2012 .
- Section 3.1)
-\end_layout
-
-\begin_layout Standard
-Loss given default (LGD), defined as 
-\begin_inset Formula 
-\[
-G=1-\frac{\text{total recovery from defaulted debts}}{\text{\text{number of defaults}}}.
-\]
-
+.
+ Further, if 
+\begin_inset Formula $E$
 \end_inset
 
-may be computed as 
-\end_layout
+ is normal independent of 
+\begin_inset Formula $(Z^{A},Z^{B})$
+\end_inset
 
-\begin_layout Standard
+, then 
 \begin_inset Formula 
-\begin{multline*}
-G\doteq h(I;\sigma)\\
-I=X-\log p,\qquad h(\iota;\sigma)=\varphi(-\frac{\iota}{\sigma})-\exp\{\iota+\frac{1}{2}\sigma^{2}\}\varphi(-\frac{\iota}{\sigma}-\sigma)
-\end{multline*}
+\[
+G=h(I;\sigma),\qquad I=X-\log p,\qquad h(\iota;\sigma)=\varphi(-\frac{\iota}{\sigma})-\exp\{\iota+\frac{1}{2}\sigma^{2}\}\varphi(-\frac{\iota}{\sigma}-\sigma)
+\]
 
 \end_inset
 
@@ -241,11 +285,75 @@ where
 \begin_inset Formula $E$
 \end_inset
 
- (see FU2012, Section 3.1.).
+.
+ 
 \end_layout
 
 \begin_layout Standard
-Now suppose that the individual factors 
+Thanks to strict monotonicity of 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+ (see Appendix of [GS FU 2012] for the latter), the correspondence between
+ 
+\begin_inset Formula $(Q,G)$
+\end_inset
+
+ and 
+\begin_inset Formula $(Y,I)$
+\end_inset
+
+ respectively, is one-to-one.
+ 
+\end_layout
+
+\begin_layout Standard
+Now consider 
+\begin_inset Formula $n$
+\end_inset
+
+ homogeneous portfolios and assume that defaults may happen at any time
+ 
+\begin_inset Formula $t=1,2,\dots.$
+\end_inset
+
+ In particular, a loan from the 
+\begin_inset Formula $i$
+\end_inset
+
+-th portfolio defaults when 
+\begin_inset Formula $A_{i,t}<B_{i,t}$
+\end_inset
+
+ where 
+\begin_inset Formula 
+\[
+A_{i,t}=\exp\{Y_{i,t}^{A}+Z_{i,t}^{A}\},\qquad B_{i,t}=\exp\{Y_{i,t}^{B}+Z_{i,t}^{B}\},\qquad1\leq i\leq n,\quad t\geq1
+\]
+
+\end_inset
+
+with the recovery rate being 
+\begin_inset Formula $R_{i,t}=\min(1,p_{i,t}^{-1}P_{i,t})$
+\end_inset
+
+ where 
+\begin_inset Formula $p_{i,t}$
+\end_inset
+
+ is the outstanding principal an 
+\begin_inset Formula 
+\[
+P_{i,t}=\exp\{X_{i,t}+E_{i,t}\},\qquad1\leq i\leq n,\quad t\geq1.
+\]
+
+\end_inset
+
+Here, 
 \family roman
 \series medium
 \shape up
@@ -258,10 +366,10 @@ Now suppose that the individual factors
 \noun off
 \color none
 
-\begin_inset Formula $Y^{A},Y^{B},X$
+\begin_inset Formula $Y_{i}^{A},Y_{i}^{B},X_{i}$
 \end_inset
 
-
+ are general stochastic processes
 \family default
 \series default
 \shape default
@@ -273,14 +381,87 @@ Now suppose that the individual factors
 \uwave default
 \noun default
 \color inherit
- evolve in time, following a VAR model, i.e.
+ and, for each 
+\begin_inset Formula $i$
+\end_inset
+
+, vectors 
+\begin_inset Formula $(Z_{i,1}^{A},Z_{i,1}^{B},E_{i,1}),(Z_{i,2}^{A},Z_{i,2}^{B},E_{i,3})$
+\end_inset
+
+ are Gaussian i.i.d.
+ with 
+\begin_inset Formula $(Z_{i,t}^{A},Z_{i,t}^{B})$
+\end_inset
+
+ independent of 
+\begin_inset Formula $E_{i,t}$
+\end_inset
+
+, 
+\end_layout
+
+\begin_layout Standard
+A
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+nalogously to the static case, we define 
+\begin_inset Formula 
+\[
+Q_{i,t}=\text{\ensuremath{p\mathrm{lim}}}\frac{\text{\# of defaults at \ensuremath{t} in \ensuremath{i}-th porftolio}}{\text{\# of loans in \ensuremath{i}-th portfolio at \ensuremath{t}}}=\varphi(-Y_{i,t}),\qquad Y_{i,t}=\frac{Y_{i,t}^{A}-Y_{i,t}^{B}}{\rho_{i}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+G_{i,t}=\text{\ensuremath{p\mathrm{lim}}}\left[\frac{\text{total loss of \ensuremath{i}-th portfolio at \ensuremath{t}}}{\text{\# \text{of defaults in \ensuremath{i}-th portfolio at \ensuremath{t}}}}\right]=h\left(I_{i,t};\sigma\right),\qquad I_{i,t}=X_{i,t}-\log p_{i,t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+L_{i,t}=\text{\ensuremath{p\mathrm{lim}}}\left[\frac{\text{total loss of \ensuremath{i}-th portfolio at \ensuremath{t}}}{\text{\# of loans in \ensuremath{i}-th portfolio at \ensuremath{t}}}\right]=Q_{i,t}G_{i,t}=\varphi(-Y_{i,t})h\left(I_{i,t};\sigma_{i}\right)
+\]
+
+\end_inset
+
+(see Appendix).
  
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Further, assume that the common factors follow a VAR model
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-(Y_{t}^{A},Y_{t}^{B},X_{t})=\Gamma U_{t}+\mathcal{E}_{t}\label{eq:yyi}
+(Y_{1,t}^{A},\dots Y_{n,t}^{A},Y_{1,t}^{B},\dots,Y_{n,t}^{B},X_{1,t},\dots,X_{n,t})^{T}=\Gamma U_{t}+\mathcal{E}_{t}\qquad t=1,2,\dots\label{eq:yyi}
 \end{equation}
 
 \end_inset
@@ -289,7 +470,7 @@ where
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is an (unknown) deterministic matrix, 
+ is a deterministic matrix, 
 \begin_inset Formula $\mathcal{E}_{t}$
 \end_inset
 
@@ -297,8 +478,8 @@ where
 \begin_inset Formula $U_{t}$
 \end_inset
 
- is a matrix of regressors possibly including constants, trends, lagged
- values of 
+ is a matrix of regressors possibly including trend, constants, lagged values
+ of 
 \family roman
 \series medium
 \shape up
@@ -311,7 +492,7 @@ where
 \noun off
 \color none
 
-\begin_inset Formula $Y^{A},Y^{B},X$
+\begin_inset Formula $Y_{i}^{A},Y_{i}^{B},X_{i}$
 \end_inset
 
 , their differences,
@@ -327,33 +508,21 @@ where
 \noun default
 \color inherit
  and exogenous variables.
- 
+ Consequently, the dynamics of 
+\begin_inset Formula $Q$
+\end_inset
+
+s and 
+\begin_inset Formula $G$
+\end_inset
+
+s is given by
 \end_layout
 
 \begin_layout Standard
-If we further assume that, at each period, the assets, the liabilities and
- collateral prices of the debtors are given by (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:abdef"
-
-\end_inset
-
-), (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:pdef"
-
-\end_inset
-
-), respectively, then the PD and LGD at 
-\begin_inset Formula $t$
-\end_inset
-
- are given by
 \begin_inset Formula 
 \begin{equation}
-Q_{t}=\varphi(-Y_{t})=\varphi\left(-\left[\Gamma^{Q}U_{t}+\epsilon_{1,t}\right]\right),\label{eq:q}
+Q_{i,t}=\varphi(-Y_{i,t})=\varphi\left(-\left[\Gamma_{Q}U_{t}+\epsilon{}_{t}\right]\right),\label{eq:q}
 \end{equation}
 
 \end_inset
@@ -361,12 +530,12 @@ Q_{t}=\varphi(-Y_{t})=\varphi\left(-\left[\Gamma^{Q}U_{t}+\epsilon_{1,t}\right]\
 
 \begin_inset Formula 
 \begin{equation}
-G_{t}=h\left(I_{t};\sigma\right)=h\left(\Gamma^{G}U_{i}+\varepsilon_{2,t};\sigma\right)\label{eq:g}
+G_{i,t}=h\left(I_{i,t};\sigma\right)=h\left(\Gamma_{G}U_{t}^{p}+\eta_{t};\sigma_{i}\right)\label{eq:g}
 \end{equation}
 
 \end_inset
 
-for some vector parameters 
+where 
 \family roman
 \series medium
 \shape up
@@ -379,10 +548,10 @@ for some vector parameters
 \noun off
 \color none
 
-\begin_inset Formula $\Gamma^{Q}$
+\begin_inset Formula $\Gamma^{Q}=\frac{1}{\rho}\star(\Gamma_{1}-\Gamma_{2})$
 \end_inset
 
-
+,
 \family default
 \series default
 \shape default
@@ -394,122 +563,185 @@ for some vector parameters
 \uwave default
 \noun default
 \color inherit
- and 
-\begin_inset Formula $\Gamma^{G}$
+ 
+\begin_inset Formula $\Gamma^{G}=(\Gamma_{3},\mathcal{I}_{n})$
 \end_inset
 
- and a Gaussian white noise 
-\begin_inset Formula $(\epsilon_{1},\varepsilon_{2})$
-\end_inset
-
-, i.e.
- the dynamics of 
-\begin_inset Formula $Q_{t}$
+, 
+\begin_inset Formula $U_{t}^{p}=(U_{t}^{T},\log p_{1,t},\dots\log p_{n,t})^{T}$
 \end_inset
 
  and 
-\begin_inset Formula $G_{t}$
+\begin_inset Formula $(\epsilon,\eta)$
 \end_inset
 
- is uniquely determined by that of 
-\begin_inset Formula $Y_{t}$
+ is a Gaussian white noise.
+ Here, 
+\begin_inset Formula $\rho=(\rho_{1},\dots,\rho_{n})^{T}$
 \end_inset
 
- and 
-\begin_inset Formula $I_{t}$
+, 
+\begin_inset Formula $\sigma=(\sigma_{1},\dots,\sigma_{n})^{T}$
 \end_inset
 
-.
- Moreover, thanks to strict monotonicity of 
-\begin_inset Formula $\varphi$
+ , 
+\begin_inset Formula $\star$
 \end_inset
 
- and 
-\begin_inset Formula $h$
+ is component-wise multiplication, 
+\begin_inset Formula $\mathcal{I}_{n}$
 \end_inset
 
- (see Appendix of [GS FU 2012] for the latter), the correspondence is one-to-one.
+ is 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ identity matrix, and 
+\begin_inset Formula $\Gamma_{j}$
+\end_inset
+
+, 
+\begin_inset Formula $j=1,2,3,$
+\end_inset
+
+ is the matrix consisting of the 
+\begin_inset Formula $j$
+\end_inset
+
+-th third of rows of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+As 
+\begin_inset Formula $(Q_{1,t},\dots,Q_{n,t},G_{1,t},\dots,G_{n,t})$
+\end_inset
+
+ is uniquely determined by the values of the common factors and parameters
+ 
+\begin_inset Formula $(\rho,\sigma,p_{t})$
+\end_inset
+
+, their distribution depends only on these parameters and the parameters
+ of the factors' distribution; in particular, it does not depend on possible
+ mutual inter-portfolio correlations of individual factors.
  
 \end_layout
 
 \begin_layout Standard
-Thus, once 
-\begin_inset Formula $\sigma$
+Once 
+\begin_inset Formula $(Q_{i,t},G_{i,t})_{i\leq n,t\leq\tau}$
 \end_inset
 
- is known, (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:yyi"
-
-\end_inset
-
-), (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:q"
-
-\end_inset
-
-) and (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:r"
-
-\end_inset
-
-) may serve as a model for the dynamics of 
-\begin_inset Formula $Q_{t}$
+ are observed and parameters 
+\begin_inset Formula $\sigma_{i}$
 \end_inset
 
  and 
-\begin_inset Formula $G_{t}$
+\begin_inset Formula $p_{i,t}$
 \end_inset
 
-.
- Therefore, once a time series of 
-\begin_inset Formula $Q_{t}$
+ are known, the adjusted factors 
+\begin_inset Formula $Y$
 \end_inset
 
  and 
-\begin_inset Formula $G_{t}$
+\begin_inset Formula $I$
 \end_inset
 
-is observed, the actors may be retrieved first by formula 
+ may be retrieved by
 \begin_inset Formula 
 \[
-Y_{t}=-\varphi^{-1}(Q_{t}),\qquad I_{t}=h^{-1}(G_{t};\sigma),
+Y_{i,t}=-\varphi^{-1}(Q_{i,t}),\qquad I_{i,t}=h^{-1}(G_{i,t};\sigma_{i}).
 \]
 
 \end_inset
 
-and standard techniques may be used to estimate the parameters of the VAR
- model.
+Consequently, standard techniques may be used to estimate 
+\begin_inset Formula $\Gamma^{G}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma^{Q}$
+\end_inset
+
+ and the variance of the residuals.
+ 
 \end_layout
 
 \begin_layout Standard
-Making predictions in the model is rather straightforward.
- If a history 
-\begin_inset Formula $\Omega_{t}=(U_{\tau},Y_{\tau},I_{\tau})_{\tau\leq t}$
+Note that the estimation procedure would be the same whether or not 
+\begin_inset Formula $\sigma$
 \end_inset
 
- is observed and 
+ was known (which is because the distribution of the adjusted factors depends
+ on 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ only through 
+\begin_inset Formula $\Gamma^{G})$
+\end_inset
+
+.
+ Moreover, in a simplified case when 
+\begin_inset Formula $\log p_{i,t}=\pi_{i}+\varpi_{i}t$
+\end_inset
+
+ , the values of 
+\begin_inset Formula $p_{i,t}$
+\end_inset
+
+ need not be known at all; instead, 
+\begin_inset Formula $\pi_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\varpi_{i}$
+\end_inset
+
+, may be estimated by becoming or being added to the trend, 
+\end_layout
+
+\begin_layout Standard
+Forecasting of 
+\begin_inset Formula $Q$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ is easyl, because analytical formulas exist for conditional distributions
+ of 
+\begin_inset Formula $Q_{i,T}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{i,T}$
+\end_inset
+
+ given information up to 
+\begin_inset Formula $\tau<T$
+\end_inset
+
+.
+ Namely, as 
 \begin_inset Formula 
 \[
-Y_{T}|\Omega_{t}\sim\mathcal{N}(\mu,v^{2})
+Y_{i,T}|\mathcal{U}_{\tau}\sim\mathcal{N}(\mu,v^{2}),\qquad\mathcal{U}_{\tau}=(U_{t})_{t\leq\tau},
 \]
 
 \end_inset
 
-for some 
-\begin_inset Formula $T>t$
+for some (
+\begin_inset Formula $\mathcal{U}_{\tau}$
 \end_inset
 
- and 
-\begin_inset Formula $\Omega_{t}$
-\end_inset
-
--measurable 
+-measurable) 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -517,221 +749,174 @@ for some
 \begin_inset Formula $v$
 \end_inset
 
-, then 
+, we have, according to TBD,
 \begin_inset Formula 
 \[
-q_{t,T}=\mathbb{P}[A_{T}<B_{T}|\Omega_{t}]
+\mathbb{P}[Q_{i,T}<\theta|\mathcal{U}_{\tau}]=\varphi\left(\frac{\varphi^{-1}(\theta)+\mu}{v}\right),\qquad\theta\in(0,1),
 \]
 
 \end_inset
 
-i.e.
- the probability of default of a single loan given 
-\begin_inset Formula $\Omega_{t}$
-\end_inset
-
- comes out as
+with the point forecast given by 
 \begin_inset Formula 
 \[
-q_{t,T}=\mathbb{P}[Z_{T}^{A}-Z_{T}^{B}+Y_{T}^{A}-Y_{T}^{B}<0|\Omega_{t}]=\mathbb{P}\left[\left.\frac{Z_{T}}{\rho}+Y_{T}\leq0\right|\Omega_{t}\right]=\varphi\left(\frac{-\mu}{\sqrt{v^{2}+1}}\right)
+\mathbb{E}(Q_{i,T}|\mathcal{U}_{\tau})=\mathbb{P}[A_{i,T}<B_{i,T}|\mathcal{U}_{\tau}]=\varphi\left(\frac{-\mu}{\sqrt{v^{2}+1}}\right)
 \]
 
 \end_inset
 
-while the distribution of the default rate is given by
-\end_layout
-
-\begin_layout Standard
+Similarly, as 
 \begin_inset Formula 
-\begin{multline*}
-\mathbb{P}[Q_{T}<\theta|\Omega_{t}]=\int\mathbf{1}\{\varphi(y)<\theta\}\mathrm{d}\mathbb{P}_{-Y_{T}|\Omega_{t}}(y)=\int\mathbf{1}\{\varphi(y)<\theta\}\mathrm{d}\varphi\left(\frac{y+\mu}{v}\right)\\
-=\int\mathbf{1}\{z<\theta\}\mathrm{d}\varphi\left(\frac{\varphi^{-1}(z)+\mu}{v}\right)=\varphi\left(\frac{\varphi^{-1}(\theta)+\mu}{v}\right)
-\end{multline*}
+\[
+I_{T}|\mathcal{U}_{\tau}\sim\mathcal{N}(\nu,w^{2})
+\]
 
 \end_inset
 
-with 
-\begin_inset Formula 
-\begin{multline*}
-\mathbb{E}(Q_{T}|\Omega_{t})=\int z\mathrm{d}\varphi\left(\frac{\varphi^{-1}(z)+\mu}{v}\right)=\int\varphi^{-1}(x-\mu)\mathrm{d}\varphi\left(\frac{x}{v}\right)\\
-=\mathbb{P}[\mathcal{N}(0,v^{2})-\mathcal{N}(0,1)\leq-\mu]=\varphi\left(\frac{-\mu}{\sqrt{v^{2}+1}}\right)=q_{t,T}
-\end{multline*}
-
+for some 
+\begin_inset Formula $\nu,$
 \end_inset
 
-i.e.
  
-\begin_inset Formula $q_{t,T}$
+\begin_inset Formula $w$
 \end_inset
 
- is a (conditionally) unbiased point forecast of 
-\begin_inset Formula $Q_{T}$
-\end_inset
-
-.
- 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Note that, equivalently, 
+, we have 
 \begin_inset Formula 
 \[
-\mathbb{P}[Q_{T}<\theta|\Omega_{t}]=\varphi\left(\frac{1}{\sqrt{\vartheta}}\left(\sqrt{1-\vartheta}\varphi^{-1}(\theta)+\varphi^{-1}(q_{t,T})\right)\right)
+\mathbb{P}[G_{i,T}<\theta|\mathcal{U}_{t}]=\varphi\left(\frac{h^{-1}(\theta;\sigma_{i})-\nu}{w}\right).
 \]
 
 \end_inset
 
-where 
+
 \begin_inset Formula 
 \[
-\vartheta=\sqrt{\frac{v^{2}}{v^{2}+1}}=\mathrm{corr}((Y_{T}^{A}-Y_{T}^{B})+Z_{T,1},(Y_{T}^{A}-Y_{T}^{B})+Z_{T,2}|\Omega),\qquad Z_{T,i}\sim\mathcal{N}(0,\rho),\quad i=1,2,\qquad\indep{}\Omega,Z_{T,1},Z_{T,2}
+\mathbb{E}(G_{i,T}|\mathcal{U}_{\tau})=g_{i,t,\tau},\qquad g_{i,t,\tau}=h(\nu;\sqrt{\sigma_{i}^{2}+w^{2}})
 \]
 
 \end_inset
 
- i.e.
- our formula is an analog of the well known formula for the loss distribution
- in Vasicek model (1987).
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Analogously, if 
-\begin_inset Formula $I_{T}|\Omega_{t}\sim\mathcal{N}(\nu,w^{2})$
-\end_inset
-
- then
-\begin_inset Formula 
-\[
-g_{t,T}=\mathbb{E}[1-R_{T}|\Omega_{t}]
-\]
-
-\end_inset
-
-- the mean loss of a loan given 
-\begin_inset Formula $\Omega_{t}$
-\end_inset
-
- - fulfills
-\begin_inset Formula 
-\[
-g_{t}=h(\nu;\sqrt{\sigma^{2}+w^{2}})
-\]
-
-\end_inset
-
-(see (iii) of Proposition 
+the mean loss of a loan given (see (iii) of Proposition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prop:h"
 
 \end_inset
 
-) and
-\begin_inset Formula 
-\begin{multline*}
-\mathbb{P}[G_{T}<\theta|\Omega_{t}]=\int\mathbf{1}\{h(\iota;\sigma)<\theta\}d\mathbb{P}_{I_{T}|\Omega_{t}}(\iota)=\int\mathbf{1}\{h(\iota;\sigma)<\theta\}d\varphi\left(\frac{\iota-\nu}{w}\right)\\
-=\int\mathbf{1}\{z<\theta\}\varphi\left(\frac{h^{-1}(z;\sigma)-\nu}{w}\right)=\varphi\left(\frac{h^{-1}(\theta;\sigma)-\nu}{w}\right)=\varphi\left(\frac{h^{-1}(\theta;\sigma)-h^{.1}(g_{i,t};\sqrt{\sigma+w^{2}})}{w}\right).
-\end{multline*}
-
-\end_inset
-
-with 
-\begin_inset Formula 
-\[
-\mathbb{E}(G_{T}|\Omega_{t})=\mathbb{E}(\mathbb{E}(1-R_{T}|I_{T})|\Omega_{t})=\mathbb{E}(1-R_{T}|\Omega_{T})=g_{t,T}
-\]
-
-\end_inset
-
-(by the Chain Rule for Conditional Expectations).
+).
  
 \end_layout
 
 \begin_layout Standard
-Once 
-\begin_inset Formula $[Y_{t}^{L},Y_{t}^{H}]$
+Moreover, as we may equivalently express,
+\begin_inset Formula 
+\begin{multline*}
+\mathbb{P}[Q_{T}<\theta|\Omega_{t}]=\varphi\left(\frac{1}{\sqrt{\vartheta}}\left(\sqrt{1-\vartheta}\varphi^{-1}(\theta)+\varphi^{-1}(\mathbb{P}[A_{i,T}<B_{i,T}|\mathcal{U}_{\tau}])\right)\right),\\
+\vartheta=\mathrm{corr}(\log A_{i,T}^{j}-\log B_{i,T}^{j},\log A_{i,T}^{k}-\log B_{i,T}^{l})=\sqrt{\frac{v^{2}}{v^{2}+1}}
+\end{multline*}
+
+\end_inset
+
+where 
+\begin_inset Formula $A_{i}^{j}$
+\end_inset
+
+,
+\begin_inset Formula $B_{i}^{j}$
+\end_inset
+
+ are assets, liabilities, respectively, of the 
+\begin_inset Formula $j$
+\end_inset
+
+-th debtor in the 
+\begin_inset Formula $i$
+\end_inset
+
+-th portfolio, we see that our formula generalizes the well known Vasicek's
+ formula for the distribution loss.
+ 
+\end_layout
+
+\begin_layout Standard
+Thanks to strict monotonicity of the transforming functions, the confidence
+ intervals of 
+\begin_inset Formula $Q$
+\end_inset
+
+ and G may be constructed by mapping of the confidence intervals for the
+ factors: once 
+\begin_inset Formula $[Y_{i,T}^{L},Y_{i,T}^{H}]$
 \end_inset
 
 , 
-\begin_inset Formula $[I_{t}^{L},I_{t}^{H}]$
+\begin_inset Formula $[I_{i,T}^{L},I_{i,T}^{H}]$
 \end_inset
 
  are confidence intervals for future values of 
-\begin_inset Formula $Y_{t},I_{t}$
+\begin_inset Formula $Y_{i,T},I_{i,T}$
 \end_inset
 
 , the intervals 
-\begin_inset Formula $[\varphi(-Y_{t}^{H}),\varphi(-Y_{t}^{L})],$
+\begin_inset Formula $[\varphi(-Y_{i,T}^{H}),\varphi(-Y_{i,T}^{L})],$
 \end_inset
 
  
-\begin_inset Formula $[h(I_{t}^{H}),h(I_{t}^{L})]$
+\begin_inset Formula $[h(I_{i,T}^{H};\sigma_{i}),h(I_{i,T}^{L};\sigma_{i})]$
 \end_inset
 
-, are confidence intervals for 
-\begin_inset Formula $Q_{t},G_{t},$
+, may serve as confidence sets for 
+\begin_inset Formula $Q_{i,t},G_{i,t},$
 \end_inset
 
  respectively.
 \end_layout
 
 \begin_layout Standard
-Finally, the percentage loss of the portfolio 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-L_{t}=\frac{\text{total loss of porfolio}}{\text{\text{number of loans}}}
-\]
-
-\end_inset
-
- which is usually of primary interest, may be computed by formula
-\begin_inset Formula 
-\[
-L_{t}=Q_{t}G_{t}=\varphi(-Y_{t})h(I_{t};\sigma).
-\]
-
-\end_inset
-
-Due to possible dependence of common factors forecasts, however, its conditional
- distribution, point forecasts and confidence intervals have to be computed
- by simulation.
-\end_layout
-
-\begin_layout Standard
-If 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is unknown then the value of 
-\begin_inset Formula $\sigma$
-\end_inset
-
- might be guessed e.g.
- from the volatility of a house price index and the average default rate
- - see the Appendix for details.
- Consequently, the parameters 
-\begin_inset Formula $\Gamma^{Q}$
+Contrary to 
+\begin_inset Formula $Q$
 \end_inset
 
  and 
-\begin_inset Formula $\Gamma^{G}$
+\begin_inset Formula $G,$
 \end_inset
 
- and the variance matrix of 
-\begin_inset Formula $\epsilon$
+ forecasts of 
+\begin_inset Formula $L_{i,T},$
 \end_inset
 
- may be estimated by standard techniques.
+ which are nonlinear transformations of two factors, are not generally analytica
+lly tractable.
+ They may be, however, efficiently evaluated by Monte Carlo simulation.
  
+\end_layout
+
+\begin_layout Standard
+Finally let us discuss the problem of of obtaining 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+ if it is not known.
+ One way of getting it could be to compute it from the volatility of a house
+ price index and the average default rate - see the Appendix for details.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{document}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -763,35 +948,40 @@ generations
 \begin_inset Formula $t-1,t-2,\dots,t-k$
 \end_inset
 
- (the loans older than 
+ (i.e.
+ the loans older than 
 \begin_inset Formula $k$
 \end_inset
 
  are no longer present in the portfolio).
  Assume further that the inflow of fresh loans into the portfolio is constant
  in time.
- Finally, assume that all the collaterals securing loans from the generation
- which started at 
+ Finally, assume that all the collaterals securing loans which originated
+ at 
 \begin_inset Formula $s$
 \end_inset
 
  have been bought for the same price 
-\begin_inset Formula $\exp\{H_{s}\}$
+\begin_inset Formula $\exp\{X_{s}\}$
 \end_inset
 
- and that the price of each of them at 
+ (which may be understood as an ``average'' price at 
+\begin_inset Formula $s$
+\end_inset
+
+) and that the price of each of them at 
 \begin_inset Formula $t$
 \end_inset
 
  is 
-\begin_inset Formula $\exp\{H_{t}+(S_{t}-S_{s})\}$
+\begin_inset Formula $\exp\{X_{t}+(S_{t}-S_{s})\}$
 \end_inset
 
  where 
 \begin_inset Formula $S$
 \end_inset
 
- is a normal random walk, specific to the loan, with variance 
+ is a normal random walk, individual to the loan, with variance 
 \begin_inset Formula $\theta^{2},$
 \end_inset
 
@@ -808,7 +998,11 @@ Denote
 \end_inset
 
 .
- Clearly, after 
+ If we, for simplicity, approximate the default rate by 
+\begin_inset Formula $q=\sum_{t=1}^{k}Q_{t}$
+\end_inset
+
+, then, after 
 \begin_inset Formula $k$
 \end_inset
 
@@ -816,11 +1010,6 @@ Denote
 \begin_inset Formula $1:(1-q):\dots:(1-q)^{k-1}.$
 \end_inset
 
-which uniquely determines 
-\begin_inset Formula $\pi_{i}=\mathbb{P}[G_{t}=i]$
-\end_inset
-
-.
  
 \end_layout
 
@@ -830,25 +1019,46 @@ Let
 \end_inset
 
  be the price of a randomly chosen collateral.
- By the Law of Iterated Variance, we then get 
+ Clearly, 
+\begin_inset Formula 
+\[
+\mathbb{E}(\log P_{t}|X)=\mathbb{E}(X_{t}+(S_{t}-S_{G_{1}})|X)=X_{t}
+\]
+
+\end_inset
+
+and, by the Law of Iterated Variance, 
 \begin_inset Formula 
 \begin{multline*}
-\mathrm{\tilde{\sigma}^{2}=var}(\log P_{t}|H)=\mathrm{var}(\mathbb{E}(\log P_{t}|G_{t},H)|H)+\mathbb{E}(\mathrm{var}(\log P_{t}|G_{t},H)|H)\\
-=\mathrm{var}(\mathbb{E}(S_{t}-S_{G}|G,H)|H)+\mathbb{E}(\mathrm{var}(S_{t}-S_{G}|G,H)|H)=\theta^{2}\boldsymbol{\mathbb{E}G_{t}=}\theta^{2}\sum_{i=1}^{k}i\pi_{i},
+\sigma^{2}=\mathrm{var}(\log P_{t}|X)=\mathrm{var}(\mathbb{E}(\log P_{t}|G_{t},X)|X)+\mathbb{E}(\mathrm{var}(\log P_{t}|G_{t},X)|X)\\
+=\mathrm{var}(\mathbb{E}(S_{t}-S_{G_{t}}|G_{t},X)|X)+\mathbb{E}(\mathrm{var}(S_{t}-S_{G_{t}}|G_{t},X)|X)=0+\mathbb{E}(G_{t}\theta^{2}|X)\\
+=\theta^{2}\mathbb{E}G_{t}=\theta^{2}\sum_{i=1}^{k}i\mathbb{P}[G_{t}=i]=\theta^{2}\sum_{i=1}^{k}\frac{i(1-q)^{i-1}}{\sum_{j=1}^{k}(1-q)^{j-1}},
 \end{multline*}
 
 \end_inset
 
-Even though the 
-\begin_inset Formula $\mathcal{L}(\log P_{t}|H)$
+
+\end_layout
+
+\begin_layout Standard
+Even though the distribution of 
+\begin_inset Formula $\log P_{t}|X$
 \end_inset
 
- is a mixture of normal distributions rather than a normal distribution,
- it is thin tailed so it will not make a big harm to approximate it by 
-\begin_inset Formula $\mathcal{N}(H_{t},\tilde{\sigma}^{2})$
+ is a mixture of normal distributions rather than normal distribution, it
+ is thin tailed so it will not make a big harm to approximate it by 
+\begin_inset Formula $\mathcal{N}(X_{t},\sigma^{2})$
+\end_inset
+
+, or, equivalently, 
+\begin_inset Formula $\log P_{t}=X_{t}+E_{t}$
 \end_inset
 
 , 
+\begin_inset Formula $E_{t}\sim\mathcal{N}(0,\sigma^{2})$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*
@@ -1011,6 +1221,156 @@ reference "eq:ab"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Convergence
+\end_layout
+
+\begin_layout Standard
+ay be, thanks to the Law of Large Numbers applied to conditional distributions
+ given the common factors, approximated as 
+\begin_inset Formula 
+\[
+Q\doteq\mathbb{P}[A<B|Y^{A},Y^{B}]=\mathbb{P}[Z^{A}-Z^{B}<Y^{B}-Y^{A}|Y^{A},Y^{B}]=\varphi(-Y),\qquad
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Forecasts
+\end_layout
+
+\begin_layout Standard
+i.e.
+ the probability of default of a single loan given 
+\begin_inset Formula $\Omega_{t}$
+\end_inset
+
+ comes out as
+\begin_inset Formula 
+\[
+q_{t,T}=\mathbb{P}[Z_{T}^{A}-Z_{T}^{B}+Y_{T}^{A}-Y_{T}^{B}<0|\Omega_{t}]=\mathbb{P}\left[\left.\frac{Z_{T}}{\rho}+Y_{T}\leq0\right|\Omega_{t}\right]=\varphi\left(\frac{-\mu}{\sqrt{v^{2}+1}}\right)
+\]
+
+\end_inset
+
+while the distribution of the default rate is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{multline*}
+\mathbb{P}[Q_{T}<\theta|\Omega_{t}]=\int\mathbf{1}\{\varphi(y)<\theta\}\mathrm{d}\mathbb{P}_{-Y_{T}|\Omega_{t}}(y)=\int\mathbf{1}\{\varphi(y)<\theta\}\mathrm{d}\varphi\left(\frac{y+\mu}{v}\right)\\
+=\int\mathbf{1}\{z<\theta\}\mathrm{d}\varphi\left(\frac{\varphi^{-1}(z)+\mu}{v}\right)=\varphi\left(\frac{\varphi^{-1}(\theta)+\mu}{v}\right)
+\end{multline*}
+
+\end_inset
+
+with 
+\begin_inset Formula 
+\begin{multline*}
+\mathbb{E}(Q_{T}|\Omega_{t})=\int z\mathrm{d}\varphi\left(\frac{\varphi^{-1}(z)+\mu}{v}\right)=\int\varphi^{-1}(x-\mu)\mathrm{d}\varphi\left(\frac{x}{v}\right)\\
+=\mathbb{P}[\mathcal{N}(0,v^{2})-\mathcal{N}(0,1)\leq-\mu]=\varphi\left(\frac{-\mu}{\sqrt{v^{2}+1}}\right)=q_{t,T}
+\end{multline*}
+
+\end_inset
+
+i.e.
+ 
+\begin_inset Formula $q_{t,T}$
+\end_inset
+
+ is a (conditionally) unbiased point forecast of 
+\begin_inset Formula $Q_{T}$
+\end_inset
+
+.
+ 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Note that, equivalently, 
+\begin_inset Formula 
+\[
+\mathbb{P}[Q_{T}<\theta|\Omega_{t}]=\varphi\left(\frac{1}{\sqrt{\vartheta}}\left(\sqrt{1-\vartheta}\varphi^{-1}(\theta)+\varphi^{-1}(q_{t,T})\right)\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\vartheta=\sqrt{\frac{v^{2}}{v^{2}+1}}=\mathrm{corr}((Y_{T}^{A}-Y_{T}^{B})+Z_{T,1},(Y_{T}^{A}-Y_{T}^{B})+Z_{T,2}|\Omega),\qquad Z_{T,i}\sim\mathcal{N}(0,\rho),\quad i=1,2,\qquad\indep{}\Omega,Z_{T,1},Z_{T,2}
+\]
+
+\end_inset
+
+ i.e.
+ our formula is an analog of the well known formula for the loss distribution
+ in Vasicek model (1987).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Analogously, if 
+\begin_inset Formula $I_{T}|\Omega_{t}\sim\mathcal{N}(\nu,w^{2})$
+\end_inset
+
+ then
+\begin_inset Formula 
+\[
+g_{t,T}=\mathbb{E}[1-R_{T}|\Omega_{t}]
+\]
+
+\end_inset
+
+- the mean loss of a loan given 
+\begin_inset Formula $\Omega_{t}$
+\end_inset
+
+ - fulfills
+\begin_inset Formula 
+\[
+g_{t}=h(\nu;\sqrt{\sigma^{2}+w^{2}})
+\]
+
+\end_inset
+
+(see (iii) of Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prop:h"
+
+\end_inset
+
+) and
+\begin_inset Formula 
+\begin{multline*}
+\mathbb{P}[G_{T}<\theta|\Omega_{t}]=\int\mathbf{1}\{h(\iota;\sigma)<\theta\}d\mathbb{P}_{I_{T}|\Omega_{t}}(\iota)=\int\mathbf{1}\{h(\iota;\sigma)<\theta\}d\varphi\left(\frac{\iota-\nu}{w}\right)\\
+=\int\mathbf{1}\{z<\theta\}\varphi\left(\frac{h^{-1}(z;\sigma)-\nu}{w}\right)=\varphi\left(\frac{h^{-1}(\theta;\sigma)-\nu}{w}\right)=\varphi\left(\frac{h^{-1}(\theta;\sigma)-h^{.1}(g_{i,t};\sqrt{\sigma+w^{2}})}{w}\right).
+\end{multline*}
+
+\end_inset
+
+with 
+\begin_inset Formula 
+\[
+\mathbb{E}(G_{T}|\Omega_{t})=\mathbb{E}(\mathbb{E}(1-R_{T}|I_{T})|\Omega_{t})=\mathbb{E}(1-R_{T}|\Omega_{T})=g_{t,T}
+\]
+
+\end_inset
+
+(by the Chain Rule for Conditional Expectations).
+ 
 \end_layout
 
 \end_body

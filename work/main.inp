@@ -38,16 +38,16 @@ factors_joh<- coint2 2 Yr Ir Yc Ic
 
 #individual factors and macro
 
-coint 4 Ic           U PI IP GDP HPIr --ct --test-down --skip-df
-coint 4    Ir        U PI IP GDP HPIr --ct --test-down --skip-df
-coint 4       Yc     U PI IP GDP HPIr --ct --test-down --skip-df
-coint 4          Yr  U PI IP GDP HPIr --ct --test-down --skip-df
-coint 4       Yc Yr  U PI IP GDP HPIr --ct --test-down --skip-df
+Ic_EG <- coint 4 Ic           U PI IP GDP HPIr --ct --test-down --skip-df
+Ir_EG <- coint 4    Ir        U PI IP GDP HPIr --ct --test-down --skip-df
+Yc_EG <- coint 4       Yc     U PI IP GDP HPIr --ct --test-down --skip-df
+Ir_EG <- coint 4          Yr  U PI IP GDP HPIr --ct --test-down --skip-df
+YrYc_EG <- coint 4       Yc Yr  U PI IP GDP HPIr --ct --test-down --skip-df
 
 #removving insignificant regressors
-EG_Ic<-  coint 0 Ic          U PI IP GDP HPIr --ct --skip-df
-EG_Ir<-  coint 0    Ir         PI IP GDP HPIr --ct --skip-df
-EG_Y <-  coint 2       Yc Yr   PI IP     HPIr --ct  --skip-df
+#EG_Ic<-  coint 0 Ic          U PI IP GDP HPIr --ct --skip-df
+#EG_Ir<-  coint 0    Ir         PI IP GDP HPIr --ct --skip-df
+#EG_Y <-  coint 2       Yc Yr   PI IP     HPIr --ct  --skip-df
 
 
 #MODEL
@@ -57,7 +57,7 @@ var 5 Yc Ic Yr Ir U PI IP GDP HPIr --lagselect
 
 joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
 
-vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
+initital_vecm <- vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
 
 restrict --full
     b[1,Ic]=1
@@ -77,7 +77,6 @@ end restrict
 # b[2,U]=0 and b[3,U]=0 would destroy full rank
 
 matrix beta=$jbeta
-
 
 series EC1 = $ec[,1]
 series EC2 = $ec[,2]
@@ -141,12 +140,16 @@ scalar maxt = time[2016:4]
 print maxt
 
 
+#!!!! the rest is to de lete in final version!
+
+
 #ols  d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1) EC3
 
 #matrix B=$coeff
 
 
 #check of point estimates, computed in excel
+
 
 smpl full
 
