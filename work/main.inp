@@ -118,15 +118,27 @@ end system
 
 ##!!!FINAL!!! without insignificant ECs
 
-system method=fiml
+final <- system method=fiml
     equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1)  EC1 EC3
     equation d_Ir const d_Yc_1 FEDR(-1)  ALL_EC
     equation d_Yc const d_Yc_1 d_U(-1) d_IP(-1)  d_HPIr(-1) FEDR(-1) ALL_EC
     equation d_Yr const d_Ic_1 d_Ir_1  d_U(-1) FEDR(-1)  ALL_EC
 end system
 
-#printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-final_ll), \
-#pvalue(X, 2, 2*(full_ll-final_ll))
+scalar final_ll = $lnl
+
+separate <-. system method=fiml
+    equation d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1)  EC1 EC3
+    equation d_Ir const  FEDR(-1) EC2 EC3
+    equation d_Yc const d_Yc_1 d_U(-1) d_IP(-1)  d_HPIr(-1) FEDR(-1) EC1 EC3
+    equation d_Yr const d_Ir_1  d_U(-1) FEDR(-1)  EC2 EC3
+end system
+
+scalar separate_ll = $lnl
+
+
+printf " LR-test, rank = 2: chi^2(3) = %6.4f [%6.4f]\n", 2*(full_ll-final_ll), \
+pvalue(X, 2, 2*(final_ll-separate_ll))
 
 #output to Excel (sheet "input - gretl")
 
@@ -138,39 +150,6 @@ print S
 
 scalar maxt = time[2016:4]
 print maxt
-
-
-#!!!! the rest is to de lete in final version!
-
-
-#ols  d_Ic const d_Ic_1 d_Yc_1 d_HPIr(-1) FEDR(-1) EC3
-
-#matrix B=$coeff
-
-
-#check of point estimates, computed in excel
-
-
-smpl full
-
-#tmp
-EC1[2017:1] = 14.087693
-EC2[2017:1] = 6.85049
-EC3[2017:1] = 10.11940
-
-EC1[2017:2] = 14.11154
-EC2[2017:2] = 6.846381
-EC3[2017:2] = 9.974288
-
-EC1[2017:3] = 14.1115349635515	
-EC2[2017:3] = 6.80062703081025	
-EC3[2017:3] = 9.8961823232502
-
-EC1[2017:4] = 14.0698885322642
-EC2[2017:4] = 6.7747304605489
-EC3[2017:4] = 9.77094396156414
-
-fcast 2017:1 2017:4  --dynamic
 
 
 
