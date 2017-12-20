@@ -5,6 +5,10 @@ diff GDP PI U IP HPIr HPIc Yr Ir Yc Ic
 
 smpl 1991:1 2016:4 
 
+#Correlation
+
+corr d_Ic d_Yc d_Ir d_Yr
+
 #UNIT ROOT TESTS
 
 adf 12 FEDR --c --ct --test-down=AIC
