@@ -61,7 +61,8 @@ var 5 Yc Ic Yr Ir U PI IP GDP HPIr --lagselect
 
 joh <- coint2 2 Yr Ir Yc Ic U PI IP GDP HPIr --ct
 
-initital_vecm <- vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1) d_U(-1) d_PI(-1)  --crt
+initital_vecm <- vecm 2 3 Ic Ir Yc Yr U PI IP GDP HPIr; FEDR(-1)  --crt
+
 
 restrict --full
     b[1,Ic]=1
